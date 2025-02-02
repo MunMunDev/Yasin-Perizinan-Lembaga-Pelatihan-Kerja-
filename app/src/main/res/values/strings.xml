@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lembaga Pelatihan Kerja Kota Parepare</string>
+    <string name="tentang_kami">
+        UPTD Balai Latihan Kerja Merupakan Unit Pelatihan Kerja Dilingkungan Pemerintahan Kota Parepare Dan Bertanggung Jawab Langsung Dibawah
+        Dinas Tenaga Kerja Kota Parepare, Yang Menyelenggarakan Pelatihan Keterampilan Kerja Bagi Tenaga Kerja Dengan Fasilitas Yang Meliputi :
+        Tanah, Bangunan Gedung, Kantor, Asrama, Ruang Kelas, Workshop, Perumahan ILK Sebagai Pejabat Fungsional, Peralatan Kantor, Perlatan Pelatihan,
+        Program Pelatihan Melalui Pembiayaan APBD Dan APBN.
+    </string>
+    <string name="logo">logo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image">Image</string>
+</resources>
