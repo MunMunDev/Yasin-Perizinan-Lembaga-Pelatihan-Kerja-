@@ -1,6 +1,7 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,11 +14,12 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.user.Pelatihan
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.FragmentHomeBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.main.MainActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.detail_pelatihan.DetailPelatihanActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.search_pelatihan.SearchPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.internal.Contexts
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -50,10 +52,10 @@ class HomeFragment : Fragment() {
     private fun setButton(){
         binding.topAppBar.apply {
             ivAccount.setOnClickListener {
-
+                (activity as MainActivity).clickAccount()
             }
             llSearchPelatihan.setOnClickListener {
-
+                startActivity(Intent(context, SearchPelatihanActivity::class.java))
             }
         }
     }
@@ -88,10 +90,12 @@ class HomeFragment : Fragment() {
 
     private fun setAdapterPelatihanTerdaftar(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(pelatihanModel: DaftarPelatihanModel) {
-
+            override fun clickPelatihan(idDaftarPelatihan: Int) {
+                val i = Intent(context, DetailPelatihanActivity::class.java)
+                i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                startActivity(i)
             }
-        })
+        }, false)
 
         binding.rvPelatihanTerdaftar.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -129,10 +133,12 @@ class HomeFragment : Fragment() {
 
     private fun setAdapterPelatihan(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(pelatihanModel: DaftarPelatihanModel) {
-
+            override fun clickPelatihan(idDaftarPelatihan: Int) {
+                val i = Intent(context, DetailPelatihanActivity::class.java)
+                i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                startActivity(i)
             }
-        })
+        }, true)
 
         binding.rvPelatihan.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

@@ -1,6 +1,7 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.data.database.api
 
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 import okhttp3.MultipartBody
@@ -36,6 +37,19 @@ interface ApiService {
     suspend fun getPelatihan(
         @Query("get_pelatihan") get_pelatihan: String,
     ): ArrayList<DaftarPelatihanModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getDetailPelatihan(
+        @Query("get_detail_pelatihan") get_detail_pelatihan: String,
+        @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+    ): ArrayList<DaftarPelatihanModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getTelahDaftarPelatihan(
+        @Query("get_detail_pelatihan") get_detail_pelatihan: String,
+        @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<PendaftarModel>
 
 
 

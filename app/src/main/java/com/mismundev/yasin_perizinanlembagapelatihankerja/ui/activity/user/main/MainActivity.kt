@@ -3,9 +3,11 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.main
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.R
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityMainBinding
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferencesLogin
     private lateinit var scaleAnimation: ScaleAnimation
+    private var checkFragmentPosition = 0   // 0 Home, 1 pelatihan, 2 history, 3 account
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -76,6 +79,7 @@ class MainActivity : AppCompatActivity() {
 //            btnHome.startAnimation(scaleAnimation)
 
             setFragment(HomeFragment())
+            checkFragmentPosition = 0
         }
     }
 
@@ -102,6 +106,7 @@ class MainActivity : AppCompatActivity() {
 //            btnPelatihan.startAnimation(scaleAnimation)
 
             setFragment(PelatihanFragment())
+            checkFragmentPosition = 1
         }
     }
 
@@ -128,6 +133,7 @@ class MainActivity : AppCompatActivity() {
 //            btnRiwayat.startAnimation(scaleAnimation)
 
             setFragment(HistoryFragment())
+            checkFragmentPosition = 2
         }
     }
 
@@ -154,6 +160,7 @@ class MainActivity : AppCompatActivity() {
 //            btnRiwayat.startAnimation(scaleAnimation)
 
             setFragment(AccountFragment())
+            checkFragmentPosition = 3
         }
     }
 
@@ -175,6 +182,25 @@ class MainActivity : AppCompatActivity() {
         scaleAnimation.apply {
             duration = 200
             fillAfter = true
+        }
+    }
+
+    private var tapDuaKali = false
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if(checkFragmentPosition == 0){
+            if (tapDuaKali){
+                super.onBackPressed()
+            }
+            tapDuaKali = true
+            Toast.makeText(this@MainActivity, "Tekan Sekali Lagi untuk keluar", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({
+                tapDuaKali = false
+            }, 2000)
+        } else{
+            clickHome()
         }
     }
 }

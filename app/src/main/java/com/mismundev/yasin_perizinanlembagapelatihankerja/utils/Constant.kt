@@ -4,7 +4,7 @@ object Constant {
 //    const val BASE_URL = "https://e-portofolio.web.id/"
     const val BASE_URL = "http://192.168.17.5/"
 //    const val BASE_URL = "http://192.168.111.137/"
-    const val BASE_URL_FILE = "pelatihan-kerja/"
+    private const val BASE_URL_FILE = "${BASE_URL}pelatihan-kerja/"
     const val LOCATION_GAMBAR = "$BASE_URL_FILE/gambar/"
 
     const val STORAGE_PERMISSION_CODE = 10
