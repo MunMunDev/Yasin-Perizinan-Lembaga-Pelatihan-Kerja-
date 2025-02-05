@@ -58,6 +58,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
     // custom
+
+    // retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
@@ -88,4 +90,7 @@ dependencies {
 
     // MIDTRANS
     implementation ("com.midtrans:uikit:2.0.0-SANDBOX")
+
+    // Swipe Refresh Layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }

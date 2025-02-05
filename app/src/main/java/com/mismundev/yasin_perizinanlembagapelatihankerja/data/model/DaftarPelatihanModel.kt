@@ -12,7 +12,7 @@ class DaftarPelatihanModel (
     var idPelatihan: Int? = null,
 
     @SerializedName("kuota")
-    var kuota: String? = null,
+    var kuota: Int? = null,
 
     @SerializedName("biaya")
     var biaya: Int? = null,
@@ -38,7 +38,7 @@ class DaftarPelatihanModel (
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
@@ -52,7 +52,7 @@ class DaftarPelatihanModel (
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(idDaftarPelatihan)
         parcel.writeValue(idPelatihan)
-        parcel.writeString(kuota)
+        parcel.writeValue(kuota)
         parcel.writeValue(biaya)
         parcel.writeString(tglMulaiDaftar)
         parcel.writeString(tglBerakhirDaftar)

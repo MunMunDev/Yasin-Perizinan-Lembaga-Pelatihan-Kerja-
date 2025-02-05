@@ -3,6 +3,8 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pela
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -38,6 +40,9 @@ class DetailPelatihanActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferencesLogin
     private var idDaftarPelatihan = 0
     private var namaPelatihan = ""
+    private var kuota = 0
+    private var tglMulaiPendaftaran = ""
+    private var tglBerakhirPendaftaran = ""
     @Inject lateinit var rupiah: KonversiRupiah
     @Inject lateinit var tanggalDanWaktu: TanggalDanWaktu
     private var dataDaftarPelatihan : DaftarPelatihanModel? = null
@@ -57,6 +62,17 @@ class DetailPelatihanActivity : AppCompatActivity() {
         fetchPelatihan(idDaftarPelatihan)
         getPelatihan()
         getDaftarGratis()
+        setSwipeRefreshLayout()
+    }
+
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefresh.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swipeRefresh.isRefreshing = false
+                fetchTelahDaftarPelatihan(idDaftarPelatihan, sharedPreferences.getIdUser())
+                fetchPelatihan(idDaftarPelatihan)
+            }, 2000)
+        }
     }
 
     private fun fetchDataPreviously() {
@@ -85,7 +101,17 @@ class DetailPelatihanActivity : AppCompatActivity() {
                 finish()
             }
             btnDaftar.setOnClickListener {
-                daftarPelatihan()
+                Log.d(TAG, "setButton: $tglMulaiPendaftaran, $tglBerakhirPendaftaran")
+                val cekMulaiPendaftaran = tanggalDanWaktu.cekTanggalMulaiPendaftaran(tglMulaiPendaftaran)
+                val cekBerakhirPendaftaran = tanggalDanWaktu.cekTanggalBerakhirPendaftaran(tglBerakhirPendaftaran)
+                Log.d(TAG, "setButton: $cekMulaiPendaftaran, $cekBerakhirPendaftaran")
+
+                if(cekMulaiPendaftaran && cekBerakhirPendaftaran){
+                    if(kuota > 0) daftarPelatihan()
+                    else if(kuota == 0) Toast.makeText(this@DetailPelatihanActivity, "Kuota Telah Habis", Toast.LENGTH_SHORT).show()
+                }
+                else if(!cekMulaiPendaftaran) Toast.makeText(this@DetailPelatihanActivity, "Waktu Pendaftaran Belum Dimulai", Toast.LENGTH_SHORT).show()
+                else if(!cekBerakhirPendaftaran) Toast.makeText(this@DetailPelatihanActivity, "Waktu Pendaftaran Telah Lewat", Toast.LENGTH_SHORT).show()
             }
             btnCetakSertifikat.setOnClickListener {
 
@@ -350,17 +376,22 @@ class DetailPelatihanActivity : AppCompatActivity() {
             data.let { result ->
                 binding.apply {
                     Log.d(TAG, "setSuccessFetchPelatihan: ")
+                    kuota = result.kuota!!
                     harga = result.biaya!!
+
                     val biaya = rupiah.rupiah(result.biaya!!.toLong())
-                    val tglMulaiPendaftaran = tanggalDanWaktu.konversiBulanSingkatan(result.tglMulaiDaftar!!)
-                    val tglBerakhirPendaftaran = tanggalDanWaktu.konversiBulanSingkatan(result.tglBerakhirDaftar!!)
+                    tglMulaiPendaftaran = result.tglMulaiDaftar!!
+                    tglBerakhirPendaftaran = result.tglBerakhirDaftar!!
+
+                    val tglMulaiPendaftaranTemp = tanggalDanWaktu.konversiBulanSingkatan(result.tglMulaiDaftar!!)
+                    val tglBerakhirPendaftaranTemp = tanggalDanWaktu.konversiBulanSingkatan(result.tglBerakhirDaftar!!)
                     val pelaksanaan = tanggalDanWaktu.konversiBulanDanWaktu(result.tglPelaksanaan!!)
 
                     tvJenisPelatihan.text = (result.pelatihanModel!!.jenisPelatihanModel!!.jenisPelatihan)!!.toUpperCase(Locale.ROOT)
                     tvNamaPelatihan.text = result.pelatihanModel!!.namaPelatihan!!.toUpperCase(Locale.ROOT)
-                    tvKuota.text = result.kuota
+                    tvKuota.text = result.kuota.toString()
                     tvBiaya.text = biaya
-                    tvPendaftaran.text = "$tglMulaiPendaftaran - $tglBerakhirPendaftaran"
+                    tvPendaftaran.text = "$tglMulaiPendaftaranTemp - $tglBerakhirPendaftaranTemp"
                     tvPelaksanaan.text = pelaksanaan
                     tvLokasi.text = result.lokasi
                     tvDeskripsi.text = result.pelatihanModel!!.deskripsi

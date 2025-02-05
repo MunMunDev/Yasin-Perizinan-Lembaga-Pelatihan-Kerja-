@@ -3,6 +3,8 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,8 +43,19 @@ class HomeFragment : Fragment() {
         getPelatihanTerdaftar()
         fetchPelatihan()
         getPelatihan()
+        setSwipeRefreshLayout()
 
         return binding.root
+    }
+
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefresh.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swipeRefresh.isRefreshing = false
+                fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
+                fetchPelatihan()
+            }, 2000)
+        }
     }
 
     private fun setSharedPreferences() {
@@ -53,7 +66,9 @@ class HomeFragment : Fragment() {
         binding.apply {
             topAppBar.apply {
                 llSearchPelatihan.setOnClickListener {
-                    startActivity(Intent(context, SearchPelatihanActivity::class.java))
+                    val i = Intent(context, SearchPelatihanActivity::class.java)
+                    i.putExtra("id_check", 0)
+                    startActivity(i)
                 }
             }
             tvLihatPelatihan.setOnClickListener {

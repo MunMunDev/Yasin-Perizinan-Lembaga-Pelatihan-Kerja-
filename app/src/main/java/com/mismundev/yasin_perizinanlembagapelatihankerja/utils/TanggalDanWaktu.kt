@@ -12,6 +12,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 import java.util.TimeZone
 
 @SuppressLint("SimpleDateFormat")
@@ -231,6 +232,34 @@ class TanggalDanWaktu {
         }, year, month, day)
         mDatePicker.setTitle("Pilih Tanggal")
         mDatePicker.show()
+    }
+
+    fun cekTanggalMulaiPendaftaran(
+        tglMulaiPendaftaran: String, format: String = "yyyy-MM-dd"
+    ): Boolean{
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+        val date = dateFormat.parse(tglMulaiPendaftaran)
+        return if(date!!.before(Date())){
+            true
+        } else if(tglMulaiPendaftaran == tanggalSekarangZonaMakassar()){
+            true
+        } else{
+            false
+        }
+    }
+
+    fun cekTanggalBerakhirPendaftaran(
+        tglBerakhirPendaftaran: String, format: String = "yyyy-MM-dd"
+    ): Boolean{
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+        val date = dateFormat.parse(tglBerakhirPendaftaran)
+        return if(date!!.after(Date())){
+            true
+        } else if(tglBerakhirPendaftaran == tanggalSekarangZonaMakassar()){
+            true
+        } else{
+            false
+        }
     }
 
 }

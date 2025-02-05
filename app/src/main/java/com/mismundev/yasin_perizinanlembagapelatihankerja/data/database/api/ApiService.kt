@@ -51,6 +51,11 @@ interface ApiService {
         @Query("id_user") id_user: Int,
     ): PendaftarModel
 
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getRiwayat(
+        @Query("get_riwayat") get_riwayat: String,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<DaftarPelatihanModel>
 
 
     // POST
@@ -77,7 +82,7 @@ interface ApiService {
         @Field("email") email:String,
         @Field("password") password:String,
         @Field("email_lama") emailLama: String
-    ): ArrayList<ResponseModel>
+    ): ResponseModel
 
     @FormUrlEncoded
     @POST("pelatihan-kerja/api/post.php")

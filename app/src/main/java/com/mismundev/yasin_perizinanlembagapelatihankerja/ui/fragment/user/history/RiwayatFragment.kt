@@ -1,5 +1,6 @@
-package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.pelatihan
+package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.history
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,83 +15,92 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.user.PelatihanAdapter
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
-import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.FragmentPelatihanBinding
+import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.FragmentRiwayatBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.detail_pelatihan.DetailPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.search_pelatihan.SearchPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
 @AndroidEntryPoint
-class PelatihanFragment : Fragment() {
-    private lateinit var binding : FragmentPelatihanBinding
-    private val viewModel: PelatihanViewModel by viewModels()
+class RiwayatFragment : Fragment() {
+    private lateinit var binding : FragmentRiwayatBinding
+    private val viewModel: RiwayatViewModel by viewModels()
     private lateinit var context: Context
+    private lateinit var sharedPreferences: SharedPreferencesLogin
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentPelatihanBinding.inflate(layoutInflater)
+        binding = FragmentRiwayatBinding.inflate(layoutInflater)
         context = this.requireContext().applicationContext
 
+        setSharedPreferences()
         setTopAppBar()
-        fetchPelatihan()
-        getPelatihan()
+        fetchRiwayat()
+        getRiwayat()
         setSwipeRefreshLayout()
 
         return binding.root
+    }
+
+    private fun setSharedPreferences() {
+        sharedPreferences = SharedPreferencesLogin(context)
     }
 
     private fun setSwipeRefreshLayout() {
         binding.swipeRefresh.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.swipeRefresh.isRefreshing = false
-                fetchPelatihan()
+                fetchRiwayat()
             }, 2000)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setTopAppBar() {
         binding.topAppBar.apply {
+            tvTitle.text = "Cari Riwayat Pelatihan"
             llSearchPelatihan.setOnClickListener {
                 val i = Intent(context, SearchPelatihanActivity::class.java)
-                i.putExtra("id_check", 0)
+                i.putExtra("id_check", 1)
                 startActivity(i)
             }
         }
     }
 
-    private fun fetchPelatihan(){
-        viewModel.fetchPelatihan()
+    private fun fetchRiwayat(){
+        viewModel.fetchRiwayat(sharedPreferences.getIdUser())
     }
 
-    private fun getPelatihan() {
-        viewModel.getPelatihan().observe(this.viewLifecycleOwner){result->
+    private fun getRiwayat() {
+        viewModel.getRiwayat().observe(this.viewLifecycleOwner){result->
             when(result){
-                is UIState.Loading-> setStartShimmerPelatihan()
-                is UIState.Success-> setSuccessFetchPelatihan(result.data)
-                is UIState.Failure-> setFailureFetchPelatihan(result.message)
+                is UIState.Loading-> setStartShimmerRiwayat()
+                is UIState.Success-> setSuccessFetchRiwayat(result.data)
+                is UIState.Failure-> setFailureFetchRiwayat(result.message)
             }
         }
     }
 
-    private fun setFailureFetchPelatihan(message: String) {
+    private fun setFailureFetchRiwayat(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        setStopShimmerPelatihan()
+        setStopShimmerRiwayat()
     }
 
-    private fun setSuccessFetchPelatihan(data: ArrayList<DaftarPelatihanModel>) {
+    private fun setSuccessFetchRiwayat(data: ArrayList<DaftarPelatihanModel>) {
         if(data.isNotEmpty()){
-            setAdapterPelatihan(data)
+            setAdapterRiwayat(data)
         } else{
             Toast.makeText(context, "Tidak ada data", Toast.LENGTH_SHORT).show()
         }
-        setStopShimmerPelatihan()
+        setStopShimmerRiwayat()
     }
 
-    private fun setAdapterPelatihan(data: ArrayList<DaftarPelatihanModel>) {
+    private fun setAdapterRiwayat(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
             override fun clickPelatihan(idDaftarPelatihan: Int, namaPelatihan: String) {
                 val i = Intent(context, DetailPelatihanActivity::class.java)
@@ -106,7 +116,7 @@ class PelatihanFragment : Fragment() {
         }
     }
 
-    private fun setStartShimmerPelatihan(){
+    private fun setStartShimmerRiwayat(){
         binding.apply {
             smPelatihan.startShimmer()
             rvPelatihan.visibility = View.GONE
@@ -114,7 +124,7 @@ class PelatihanFragment : Fragment() {
         }
     }
 
-    private fun setStopShimmerPelatihan(){
+    private fun setStopShimmerRiwayat(){
         binding.apply {
             smPelatihan.stopShimmer()
             rvPelatihan.visibility = View.VISIBLE
