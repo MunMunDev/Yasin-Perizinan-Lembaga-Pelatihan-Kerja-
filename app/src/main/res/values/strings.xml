@@ -7,7 +7,12 @@
         Program Pelatihan Melalui Pembiayaan APBD Dan APBN.
     </string>
     <string name="logo">logo</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image">Image</string>
+    <string-array name="metode_pembayaran">
+        <item>Online</item>
+        <item>Ditempat</item>
+    </string-array>
 </resources>

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.database.api.ApiService
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +19,9 @@ import javax.inject.Inject
 class DetailPelatihanViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    private var _telahDaftar = MutableLiveData<UIState<ArrayList<PendaftarModel>>>()
-    private var _pelatihan = MutableLiveData<UIState<ArrayList<DaftarPelatihanModel>>>()
+    private var _telahDaftar = MutableLiveData<UIState<PendaftarModel>>()
+    private var _pelatihan = MutableLiveData<UIState<DaftarPelatihanModel>>()
+    private var _responseDaftarPelatihan = MutableLiveData<UIState<ResponseModel>>()
 
     fun fetchTelahDaftarPelatihan(idDaftarPelatihan: Int, idUser: Int){
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,7 +36,7 @@ class DetailPelatihanViewModel @Inject constructor(
         }
     }
 
-    fun fetchDetailPelatihan(idDaftarPelatihan: Int){
+    fun fetchPelatihan(idDaftarPelatihan: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihan.postValue(UIState.Loading)
             delay(1_000)
@@ -47,6 +49,21 @@ class DetailPelatihanViewModel @Inject constructor(
         }
     }
 
-    fun getTelahDaftarPelatihan(): LiveData<UIState<ArrayList<PendaftarModel>>> = _telahDaftar
-    fun getDetailPelatihan(): LiveData<UIState<ArrayList<DaftarPelatihanModel>>> = _pelatihan
+    fun postDaftarPelatihan(idDaftarPelatihan: Int, idUser: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            _responseDaftarPelatihan.postValue(UIState.Loading)
+            delay(1_000)
+            try {
+                val pelatihanTerdaftar = api.postDaftarPelatihan("", idDaftarPelatihan, idUser)
+                _responseDaftarPelatihan.postValue(UIState.Success(pelatihanTerdaftar))
+            } catch (ex: Exception){
+                _responseDaftarPelatihan.postValue(UIState.Failure("Gagal : ${ex.message}"))
+            }
+        }
+    }
+
+    fun getTelahDaftarPelatihan(): LiveData<UIState<PendaftarModel>> = _telahDaftar
+    fun getPelatihan(): LiveData<UIState<DaftarPelatihanModel>> = _pelatihan
+    fun getDaftarPelatihan(): LiveData<UIState<ResponseModel>> = _responseDaftarPelatihan
+
 }

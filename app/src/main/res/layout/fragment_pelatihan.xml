@@ -16,7 +16,7 @@
             android:orientation="vertical">
             <include
                 android:id="@+id/topAppBar"
-                layout="@layout/appbar_top_bar_search"/>
+                layout="@layout/appbar_top_bar"/>
 
             <TextView
                 android:id="@+id/tvPelatihan"

@@ -8,7 +8,8 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 interface OnClickItem {
     interface ClickPelatihan{
         fun clickPelatihan(
-            idDaftarPelatihan: Int
+            idDaftarPelatihan: Int,
+            namaPelatihan: String
         )
     }
 

@@ -42,9 +42,7 @@ class PelatihanFragment : Fragment() {
 
     private fun setTopAppBar() {
         binding.topAppBar.apply {
-            btnBack.visibility = View.GONE
-
-            srcData.setOnClickListener {
+            llSearchPelatihan.setOnClickListener {
                 startActivity(Intent(context, SearchPelatihanActivity::class.java))
             }
         }
@@ -80,9 +78,10 @@ class PelatihanFragment : Fragment() {
 
     private fun setAdapterPelatihan(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(idDaftarPelatihan: Int) {
+            override fun clickPelatihan(idDaftarPelatihan: Int, namaPelatihan: String) {
                 val i = Intent(context, DetailPelatihanActivity::class.java)
                 i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                i.putExtra("nama_pelatihan", namaPelatihan)
                 startActivity(i)
             }
         }, false)

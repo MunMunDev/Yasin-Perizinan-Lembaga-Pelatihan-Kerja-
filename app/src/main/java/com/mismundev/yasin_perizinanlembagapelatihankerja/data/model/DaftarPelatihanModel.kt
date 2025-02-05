@@ -15,7 +15,7 @@ class DaftarPelatihanModel (
     var kuota: String? = null,
 
     @SerializedName("biaya")
-    var biaya: String? = null,
+    var biaya: Int? = null,
 
     @SerializedName("tgl_mulai_daftar")
     var tglMulaiDaftar: String? = null,
@@ -39,7 +39,7 @@ class DaftarPelatihanModel (
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
-        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -53,7 +53,7 @@ class DaftarPelatihanModel (
         parcel.writeValue(idDaftarPelatihan)
         parcel.writeValue(idPelatihan)
         parcel.writeString(kuota)
-        parcel.writeString(biaya)
+        parcel.writeValue(biaya)
         parcel.writeString(tglMulaiDaftar)
         parcel.writeString(tglBerakhirDaftar)
         parcel.writeString(tglPelaksanaan)

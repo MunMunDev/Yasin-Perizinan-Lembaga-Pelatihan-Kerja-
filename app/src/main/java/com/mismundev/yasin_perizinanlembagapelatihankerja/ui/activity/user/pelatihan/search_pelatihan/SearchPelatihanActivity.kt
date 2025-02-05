@@ -107,9 +107,10 @@ class SearchPelatihanActivity : AppCompatActivity() {
 
     private fun setAdapterPelatihan(data: ArrayList<DaftarPelatihanModel>) {
         adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(idDaftarPelatihan: Int) {
+            override fun clickPelatihan(idDaftarPelatihan: Int, namaPelatihan: String) {
                 val i = Intent(this@SearchPelatihanActivity, DetailPelatihanActivity::class.java)
                 i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                i.putExtra("nama_pelatihan", namaPelatihan)
                 startActivity(i)
             }
         }, false)

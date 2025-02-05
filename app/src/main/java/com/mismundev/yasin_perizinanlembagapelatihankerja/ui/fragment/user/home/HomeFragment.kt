@@ -50,12 +50,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setButton(){
-        binding.topAppBar.apply {
-            ivAccount.setOnClickListener {
-                (activity as MainActivity).clickAccount()
+        binding.apply {
+            topAppBar.apply {
+                llSearchPelatihan.setOnClickListener {
+                    startActivity(Intent(context, SearchPelatihanActivity::class.java))
+                }
             }
-            llSearchPelatihan.setOnClickListener {
-                startActivity(Intent(context, SearchPelatihanActivity::class.java))
+            tvLihatPelatihan.setOnClickListener {
+                (activity as MainActivity).clickPelatihan()
             }
         }
     }
@@ -90,9 +92,10 @@ class HomeFragment : Fragment() {
 
     private fun setAdapterPelatihanTerdaftar(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(idDaftarPelatihan: Int) {
+            override fun clickPelatihan(idDaftarPelatihan: Int, namaPelatihan: String) {
                 val i = Intent(context, DetailPelatihanActivity::class.java)
                 i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                i.putExtra("nama_pelatihan", namaPelatihan)
                 startActivity(i)
             }
         }, false)
@@ -133,9 +136,10 @@ class HomeFragment : Fragment() {
 
     private fun setAdapterPelatihan(data: ArrayList<DaftarPelatihanModel>) {
         val adapter = PelatihanAdapter(data, object : OnClickItem.ClickPelatihan{
-            override fun clickPelatihan(idDaftarPelatihan: Int) {
+            override fun clickPelatihan(idDaftarPelatihan: Int, namaPelatihan: String) {
                 val i = Intent(context, DetailPelatihanActivity::class.java)
                 i.putExtra("id_daftar_pelatihan", idDaftarPelatihan)
+                i.putExtra("nama_pelatihan", namaPelatihan)
                 startActivity(i)
             }
         }, true)
