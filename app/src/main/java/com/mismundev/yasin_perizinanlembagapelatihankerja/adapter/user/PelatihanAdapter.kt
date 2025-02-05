@@ -83,7 +83,7 @@ class PelatihanAdapter(
                     tvHarga.text = harga
                     tvTglPelatihan.text = "$tanggal $waktu"
                     itemView.setOnClickListener {
-                        click.clickPelatihan(daftarPelatihan.idDaftarPelatihan!!)
+                        click.clickPelatihan(daftarPelatihan.idDaftarPelatihan!!, daftarPelatihan.pelatihanModel!!.namaPelatihan!!)
                     }
                 }
 

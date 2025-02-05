@@ -20,9 +20,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivAccount"
+            app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/bg_card_search"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="2dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:elevation="2dp">
@@ -46,28 +46,5 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-        <!--        <SearchView-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="40dp"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            android:layout_marginEnd="14dp"-->
-        <!--            app:layout_constraintEnd_toStartOf="@id/ivAccount"-->
-        <!--            android:background="@drawable/bg_card_search"-->
-        <!--            android:queryHint="Cari "-->
-        <!--            android:searchHintIcon="@id/ivAccount"/>-->
-
-        <ImageView
-            android:id="@+id/ivAccount"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:contentDescription="icon_account"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/icon_account"
-            android:background="@drawable/bg_circle_account"
-            tools:ignore="HardcodedText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.Toolbar>

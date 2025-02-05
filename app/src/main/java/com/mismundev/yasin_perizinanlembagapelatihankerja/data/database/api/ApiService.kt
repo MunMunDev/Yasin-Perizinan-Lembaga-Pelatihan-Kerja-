@@ -42,14 +42,14 @@ interface ApiService {
     suspend fun getDetailPelatihan(
         @Query("get_detail_pelatihan") get_detail_pelatihan: String,
         @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
-    ): ArrayList<DaftarPelatihanModel>
+    ): DaftarPelatihanModel
 
     @GET("pelatihan-kerja/api/get.php")
     suspend fun getTelahDaftarPelatihan(
-        @Query("get_detail_pelatihan") get_detail_pelatihan: String,
+        @Query("get_telah_daftar_pelatihan") get_telah_daftar_pelatihan: String,
         @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
         @Query("id_user") id_user: Int,
-    ): ArrayList<PendaftarModel>
+    ): PendaftarModel
 
 
 
@@ -64,7 +64,7 @@ interface ApiService {
         @Field("email") email:String,
         @Field("password") password:String,
         @Field("sebagai") sebagai:String
-    ): ArrayList<ResponseModel>
+    ): ResponseModel
 
     @FormUrlEncoded
     @POST("pelatihan-kerja/api/post.php")
@@ -85,5 +85,22 @@ interface ApiService {
         @Field("hapus_akun") hapusAkun:String,
         @Field("id_user") idUser: String
     ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postDaftarPelatihan(
+        @Field("post_daftar_pelatihan") post_daftar_pelatihan:String,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Field("id_user") id_user: Int,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postRegistrasiPembayaran(
+        @Field("post_register_pembayaran") post_register_pembayaran:String,
+        @Field("kode_unik") kode_unik: String,
+        @Field("id_user") id_user: Int,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+    ): ResponseModel
 
 }

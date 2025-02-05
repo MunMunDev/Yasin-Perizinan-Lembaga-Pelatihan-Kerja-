@@ -20,7 +20,7 @@ class RegisterViewModel @Inject constructor(
     private val api: ApiService
 ) : ViewModel(){
 
-    private var _registerUser = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
+    private var _registerUser = MutableLiveData<UIState<ResponseModel>>()
 
     fun postRegisterUser(nama:String, alamat:String, nomorHp:String, email:String, password:String, sebagai:String){
         viewModelScope.launch(Dispatchers.IO) {
@@ -35,5 +35,5 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun getRegisterUser(): LiveData<UIState<ArrayList<ResponseModel>>> = _registerUser
+    fun getRegisterUser(): LiveData<UIState<ResponseModel>> = _registerUser
 }
