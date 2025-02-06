@@ -399,7 +399,7 @@ class DetailPelatihanActivity : AppCompatActivity() {
 
                     Glide.with(this@DetailPelatihanActivity)
                         .load("${Constant.LOCATION_GAMBAR}${result.pelatihanModel!!.gambar}") // URL Gambar
-                        .placeholder(com.midtrans.sdk.uikit.R.drawable.gif_loading_ios)
+                        .placeholder(R.drawable.loading)
                         .error(R.drawable.img_pelatihan)
                         .into(ivGambarPelatihan) // imageView mana yang akan diterapkan
 

@@ -1,6 +1,7 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.account
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +16,8 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseMod
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogAkunBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.FragmentAccountBinding
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.login.LoginActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.main.MainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.LoadingAlertDialog
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
@@ -84,9 +87,17 @@ class AccountFragment : Fragment() {
     }
 
     private fun button() {
-        binding.btnUbahData.setOnClickListener {
-            setDialogUpdateData()
+        binding.apply {
+            btnUbahData.setOnClickListener {
+                setDialogUpdateData()
+            }
+            btnLogout.setOnClickListener{
+                sharedPreferences.setLogin(0, "","", "","", "", "")
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                (activity as MainActivity).finish()
+            }
         }
+
     }
 
     private fun setDialogUpdateData() {

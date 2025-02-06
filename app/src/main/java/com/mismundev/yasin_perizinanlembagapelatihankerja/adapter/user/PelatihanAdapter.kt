@@ -67,6 +67,7 @@ class PelatihanAdapter(
             binding.apply {
                 Glide.with(itemView.context)
                     .load("${Constant.LOCATION_GAMBAR}${daftarPelatihan.pelatihanModel!!.gambar}") // URL Gambar
+                    .placeholder(R.drawable.loading)
                     .error(R.drawable.img_pelatihan)
                     .into(ivGambarPelatihan) // imageView mana yang akan diterapkan
 
