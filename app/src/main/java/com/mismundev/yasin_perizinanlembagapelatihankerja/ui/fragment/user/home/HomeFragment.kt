@@ -3,6 +3,8 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelat
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.search_pelatihan.SearchPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.CheckNetwork
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -28,6 +31,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var context: Context
     private lateinit var sharedPreferences: SharedPreferencesLogin
+    private val checkNetwork = CheckNetwork()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,12 +41,34 @@ class HomeFragment : Fragment() {
         context = requireContext().applicationContext
         setButton()
         setSharedPreferences()
+        checkNetworkInFragment()
         fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
-        getPelatihanTerdaftar()
         fetchPelatihan()
+        getPelatihanTerdaftar()
         getPelatihan()
+        setSwipeRefreshLayout()
 
         return binding.root
+    }
+
+    private fun checkNetworkInFragment() {
+//        if(checkNetwork.isNetworkAvailable(requireActivity())){
+//            fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
+//            fetchPelatihan()
+//        } else{
+//            // error no Internet
+//            Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show()
+//        }
+    }
+
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefresh.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swipeRefresh.isRefreshing = false
+                fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
+                fetchPelatihan()
+            }, 2000)
+        }
     }
 
     private fun setSharedPreferences() {
@@ -53,7 +79,9 @@ class HomeFragment : Fragment() {
         binding.apply {
             topAppBar.apply {
                 llSearchPelatihan.setOnClickListener {
-                    startActivity(Intent(context, SearchPelatihanActivity::class.java))
+                    val i = Intent(context, SearchPelatihanActivity::class.java)
+                    i.putExtra("id_check", 0)
+                    startActivity(i)
                 }
             }
             tvLihatPelatihan.setOnClickListener {

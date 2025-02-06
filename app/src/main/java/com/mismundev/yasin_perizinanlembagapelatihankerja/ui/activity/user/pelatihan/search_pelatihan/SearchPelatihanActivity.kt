@@ -14,6 +14,7 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelat
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivitySearchPelatihanBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.detail_pelatihan.DetailPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -22,16 +23,38 @@ import java.util.ArrayList
 class SearchPelatihanActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchPelatihanBinding
     private val viewModel: SearchPelatihanViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferencesLogin
     private lateinit var adapter: PelatihanAdapter
+    private var idCheck = 0     // Jika 0 maka pelatihan, jika 1 maka riwayat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchPelatihanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSharedPreferences()
+        fetchDataPreviously()
         setButton()
-        fetchPelatihan()
+//        fetchPelatihan()
         getPelatihan()
+        getRiwayat()
         setSearchData()
+    }
+
+    private fun setSharedPreferences() {
+        sharedPreferences = SharedPreferencesLogin(this@SearchPelatihanActivity)
+    }
+
+    private fun fetchDataPreviously() {
+        val extras: Bundle? = intent.extras
+        if(extras != null){
+            idCheck = extras.getInt("id_check", 0)
+
+            if(idCheck == 0){
+                fetchPelatihan()
+            } else{
+                fetchRiwayat(sharedPreferences.getIdUser())
+            }
+        }
     }
 
     private fun setButton() {
@@ -119,6 +142,35 @@ class SearchPelatihanActivity : AppCompatActivity() {
             it.layoutManager = LinearLayoutManager(this@SearchPelatihanActivity, LinearLayoutManager.VERTICAL, false)
             it.adapter = adapter
         }
+    }
+
+    // Riwayat pelatihan
+    private fun fetchRiwayat(idUser: Int) {
+        viewModel.fetchRiwayat(idUser)
+    }
+
+    private fun getRiwayat(){
+        viewModel.getRiwayat().observe(this@SearchPelatihanActivity){result->
+            when(result){
+                is UIState.Loading -> {}
+                is UIState.Success -> setSuccessFetchRiwayat(result.data)
+                is UIState.Failure -> setFailureFetchRiwayat(result.message)
+            }
+        }
+    }
+
+    private fun setFailureFetchRiwayat(message: String) {
+        Toast.makeText(this@SearchPelatihanActivity, message, Toast.LENGTH_SHORT).show()
+        setStopShimmerPelatihan()
+    }
+
+    private fun setSuccessFetchRiwayat(data: ArrayList<DaftarPelatihanModel>) {
+        if(data.isNotEmpty()){
+            setAdapterPelatihan(data)
+        } else{
+            Toast.makeText(this@SearchPelatihanActivity, "Tidak ada data", Toast.LENGTH_SHORT).show()
+        }
+        setStopShimmerPelatihan()
     }
 
     private fun setStartShimmerPelatihan(){

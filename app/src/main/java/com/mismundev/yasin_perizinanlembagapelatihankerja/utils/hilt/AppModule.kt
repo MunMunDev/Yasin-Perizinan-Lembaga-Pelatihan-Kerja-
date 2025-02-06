@@ -28,8 +28,8 @@ object AppModule {
         .baseUrl(Constant.BASE_URL)
         .client(
             OkHttpClient().newBuilder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
                 .build()
         )
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))

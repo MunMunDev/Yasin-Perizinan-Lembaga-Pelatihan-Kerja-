@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.user.pelatihan.PelatihanFragment"
+    tools:context=".ui.fragment.user.history.RiwayatFragment"
     android:id="@+id/swipeRefresh">
 
     <androidx.core.widget.NestedScrollView
@@ -29,7 +28,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="18dp"
-                android:text="Pelatihan"
+                android:text="Riwayat Pelatihan"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>

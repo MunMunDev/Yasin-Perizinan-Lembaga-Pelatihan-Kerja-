@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.Toast
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.R
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityMainBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.account.AccountFragment
-import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.history.HistoryFragment
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.history.RiwayatFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.home.HomeFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.pelatihan.PelatihanFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
@@ -132,7 +131,7 @@ class MainActivity : AppCompatActivity() {
 
 //            btnRiwayat.startAnimation(scaleAnimation)
 
-            setFragment(HistoryFragment())
+            setFragment(RiwayatFragment())
             checkFragmentPosition = 2
         }
     }
