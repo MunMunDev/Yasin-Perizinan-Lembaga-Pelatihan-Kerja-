@@ -8,14 +8,23 @@
             android:id="@+id/adminNavDrawerHome"
             android:title="Halaman Home"/>
         <item
-            android:id="@+id/adminNavDrawerAkunWo"
-            android:title="Akun WO"/>
+            android:id="@+id/adminNavDrawerJenisPelatihan"
+            android:title="Jenis Pelatihan"/>
+        <item
+            android:id="@+id/adminNavDrawerPelatihan"
+            android:title="Pelatihan"/>
+        <item
+            android:id="@+id/adminNavDrawerDaftarPelatihan"
+            android:title="Daftar Pelatihan"/>
+        <item
+            android:id="@+id/adminNavDrawerPendaftar"
+            android:title="Pendaftar"/>
+        <item
+            android:id="@+id/adminNavDrawerLogPembayaran"
+            android:title="Log Pembayaran"/>
         <item
             android:id="@+id/adminNavDrawerAkunUser"
             android:title="Akun User"/>
-        <item
-            android:id="@+id/adminNavDrawerTestimoni"
-            android:title="Testimoni"/>
     </group>
 
     <group android:id="@+id/adminDrawerBottom">

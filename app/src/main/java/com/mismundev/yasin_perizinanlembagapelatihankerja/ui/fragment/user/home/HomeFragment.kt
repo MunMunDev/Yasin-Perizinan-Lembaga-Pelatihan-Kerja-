@@ -42,8 +42,8 @@ class HomeFragment : Fragment() {
         setButton()
         setSharedPreferences()
         checkNetworkInFragment()
-        fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
-        fetchPelatihan()
+//        fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
+//        fetchPelatihan()
         getPelatihanTerdaftar()
         getPelatihan()
         setSwipeRefreshLayout()
@@ -52,13 +52,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkNetworkInFragment() {
-//        if(checkNetwork.isNetworkAvailable(requireActivity())){
-//            fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
-//            fetchPelatihan()
-//        } else{
-//            // error no Internet
-//            Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show()
-//        }
+        if(checkNetwork.isNetworkAvailable(requireActivity())){
+            fetchPelatihanTerdaftar(sharedPreferences.getIdUser())
+            fetchPelatihan()
+        } else{
+            // error no Internet
+            Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setSwipeRefreshLayout() {
@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getPelatihanTerdaftar(){
-        viewModel.getPelatihanTerdaftar().observe(viewLifecycleOwner){result->
+            viewModel.getPelatihanTerdaftar().observe(viewLifecycleOwner){result->
             when(result){
                 is UIState.Loading-> setStartShimmerPelatihanTerdaftar()
                 is UIState.Success-> setSuccessFetchPelatihanTerdaftar(result.data)

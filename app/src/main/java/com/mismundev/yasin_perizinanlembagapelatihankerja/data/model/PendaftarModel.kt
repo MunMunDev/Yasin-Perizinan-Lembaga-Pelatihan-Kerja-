@@ -18,8 +18,8 @@ class PendaftarModel (
     @SerializedName("tgl_daftar")
     var tglDaftar: String? = null,
 
-    @SerializedName("jenis_pelatihan")
-    var jenisPelatihanModel: JenisPelatihanModel? = null,
+    @SerializedName("daftar_pelatihan")
+    var daftarPelatihanModel: DaftarPelatihanModel? = null,
 
     @SerializedName("user")
     var userModel: UsersModel? = null,

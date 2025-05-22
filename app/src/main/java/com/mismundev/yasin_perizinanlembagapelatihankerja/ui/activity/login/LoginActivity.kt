@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityLoginBinding
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.main.AdminMainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.register.RegisterActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.main.MainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.LoadingAlertDialog
@@ -127,8 +128,8 @@ class LoginActivity : AppCompatActivity() {
             if(valueSebagai=="user"){
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             } else{
-//                Toast.makeText(this@LoginActivity, "Selamat Datang Admin", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(this@LoginActivity, AdminMainActivity::class.java))
+                Toast.makeText(this@LoginActivity, "Selamat Datang Admin", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@LoginActivity, AdminMainActivity::class.java))
             }
             finish()
         } catch (ex: Exception){

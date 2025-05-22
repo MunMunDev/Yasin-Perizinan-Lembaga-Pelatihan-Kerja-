@@ -183,13 +183,15 @@ class TanggalDanWaktu {
     }
 
     fun selectedDateTime(tanggalTempt:String, tv: TextView, context: Context){
-        var arrayTanggalSekarang = tanggalTempt.split("-")
+        var arrayTanggalWaktuSekarang = tanggalTempt.split(" ")
+
+        var arrayTanggalSekarang = arrayTanggalWaktuSekarang[0].split("-")
+        var arrayWaktuSekarang = arrayTanggalWaktuSekarang[0].split("-")
 
         val c = Calendar.getInstance()
         val year = arrayTanggalSekarang[0].toInt()
         val month = arrayTanggalSekarang[1].toInt()-1   // Kurang 1, diambil dari array
         val day = arrayTanggalSekarang[2].toInt()
-
 
         val mDatePicker = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             var tahun = year.toString()
@@ -206,8 +208,8 @@ class TanggalDanWaktu {
 
             // Waktu
             var valueWaktu = ""
-            val hour = 10
-            val minute = 0
+            val hour = arrayWaktuSekarang[0].toInt()
+            val minute = arrayWaktuSekarang[1].toInt()
             val mTimePicker: TimePickerDialog = TimePickerDialog(context,
                 { timePicker, selectedHour, selectedMinute ->
                     var menit = selectedMinute.toString()

@@ -1,6 +1,7 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.pelatihan.detail_pelatihan
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,16 +9,12 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.mismundev.yasin_perizinanlembagapelatihankerja.R
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
-import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityDetailPelatihanBinding
@@ -29,15 +26,16 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreference
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.TanggalDanWaktu
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 import java.util.Locale
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class DetailPelatihanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPelatihanBinding
     private val viewModel: DetailPelatihanViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferencesLogin
+    private var idPendaftar = 0
     private var idDaftarPelatihan = 0
     private var namaPelatihan = ""
     private var kuota = 0
@@ -114,7 +112,12 @@ class DetailPelatihanActivity : AppCompatActivity() {
                 else if(!cekBerakhirPendaftaran) Toast.makeText(this@DetailPelatihanActivity, "Waktu Pendaftaran Telah Lewat", Toast.LENGTH_SHORT).show()
             }
             btnCetakSertifikat.setOnClickListener {
-
+                val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                intent.putExtra(
+                    SearchManager.QUERY,
+                    "https://e-portofolio.web.id/pelatihan-kerja/print.php?id_pendaftar=$idPendaftar"
+                )
+                startActivity(intent)
             }
         }
     }
@@ -282,6 +285,7 @@ class DetailPelatihanActivity : AppCompatActivity() {
                         btnTerdaftar.visibility = View.GONE
                         btnDaftar.visibility = View.GONE
                         btnCetakSertifikat.visibility = View.VISIBLE
+                        idPendaftar = data.idPendaftar!!
                     } else if(it == "tidak lulus"){
                         // Tidak lulus
                         tvKeterangan.text = """

@@ -76,7 +76,7 @@
                     android:hint="Masukkan Nama"
                     android:textColorHint="@color/abuabu_tua"
                     android:inputType="text"
-                    android:maxLength="30" />
+                    android:maxLength="20" />
 
                 <TextView
                     android:layout_width="match_parent"
