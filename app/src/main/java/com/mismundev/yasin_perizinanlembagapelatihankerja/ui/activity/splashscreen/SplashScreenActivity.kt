@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.mismundev.yasin_perizinanlembagapelatihankerja.R
+import android.widget.Toast
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivitySplashScreenBinding
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.main.AdminMainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.login.LoginActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.user.main.MainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
@@ -38,8 +39,8 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
                     finish()
                 } else if(sharedPreferencesLogin.getSebagai() == "admin"){
-//                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
-//                    finish()
+                    Toast.makeText(this@SplashScreenActivity, "Selamat Datang Admin", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
                 }
             }
         }, 3000)

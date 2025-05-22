@@ -11,20 +11,23 @@ class DaftarPelatihanModel (
     @SerializedName("id_pelatihan")
     var idPelatihan: Int? = null,
 
+    @SerializedName("batch")
+    var batch: String? = null,
+
     @SerializedName("kuota")
     var kuota: Int? = null,
 
     @SerializedName("biaya")
     var biaya: Int? = null,
 
+    @SerializedName("tgl_pelaksanaan")
+    var tglPelaksanaan: String? = null,
+
     @SerializedName("tgl_mulai_daftar")
     var tglMulaiDaftar: String? = null,
 
     @SerializedName("tgl_berakhir_daftar")
     var tglBerakhirDaftar: String? = null,
-
-    @SerializedName("tgl_pelaksanaan")
-    var tglPelaksanaan: String? = null,
 
     @SerializedName("lokasi")
     var lokasi: String? = null,
@@ -38,6 +41,7 @@ class DaftarPelatihanModel (
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
@@ -52,11 +56,12 @@ class DaftarPelatihanModel (
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(idDaftarPelatihan)
         parcel.writeValue(idPelatihan)
+        parcel.writeString(batch)
         parcel.writeValue(kuota)
         parcel.writeValue(biaya)
+        parcel.writeString(tglPelaksanaan)
         parcel.writeString(tglMulaiDaftar)
         parcel.writeString(tglBerakhirDaftar)
-        parcel.writeString(tglPelaksanaan)
         parcel.writeString(lokasi)
         parcel.writeString(sertifikat)
     }

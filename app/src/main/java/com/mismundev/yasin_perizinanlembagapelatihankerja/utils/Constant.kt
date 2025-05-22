@@ -6,8 +6,10 @@ import java.security.KeyStore
 import javax.crypto.KeyGenerator
 
 object Constant {
-//    const val BASE_URL = "https://e-portofolio.web.id/"
-    const val BASE_URL = "http://192.168.17.6/"
+    const val BASE_URL = "https://e-portofolio.web.id/"
+//    const val BASE_URL = "http://192.168.17.7"
+//    const val BASE_URL = "http://192.168.1.22/"s
+//    const val BASE_URL = "http://192.168.233.137/"
     private const val BASE_URL_FILE = "${BASE_URL}pelatihan-kerja/"
     const val LOCATION_GAMBAR = "$BASE_URL_FILE/gambar/"
 

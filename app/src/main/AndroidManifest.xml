@@ -2,9 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".utils.hilt.BaseApplication"
@@ -19,7 +29,25 @@
         android:theme="@style/Theme.YasinPerizinanLembagaPelatihanKerja"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.admin.AdminMainActivity"
+            android:name=".ui.activity.admin.pendaftar.AdminPendaftarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.log_pembayaran.AdminLogPembayaranActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.user.AdminUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.daftar_pelatihan.AdminDaftarPelatihanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.pelatihan.AdminPelatihanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.jenis_pelatihan.AdminJenisPelatihanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.main.AdminMainActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.user.payment.PaymentActivity"
