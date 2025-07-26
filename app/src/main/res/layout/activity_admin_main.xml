@@ -22,6 +22,63 @@
                 layout="@layout/appbar_nav_drawer"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvPermohonan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/myAppBar"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/white">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+                    <ImageView
+                        android:id="@+id/ivGambarPermohonan"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/image_permohonan"/>
+
+                    <TextView
+                        android:id="@+id/tvTitlePermohonan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivGambarPermohonan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="12dp"
+                        android:text="Permohonan"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvPenjelasanPermohonan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitlePermohonan"
+                        app:layout_constraintStart_toEndOf="@id/ivGambarPermohonan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="12dp"
+                        android:text="Aturlah Permohonan Yang Diajukan Oleh User"
+                        android:textSize="14sp"
+                        android:textColor="@color/abuabu_tua"
+                        android:textStyle="bold"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cvJenisPelatihan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

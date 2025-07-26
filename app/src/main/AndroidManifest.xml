@@ -29,6 +29,15 @@
         android:theme="@style/Theme.YasinPerizinanLembagaPelatihanKerja"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.pdf.PdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.permohonan.dokumen.AdminPermohonanDokumenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.admin.permohonan.AdminPermohonanActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.admin.pendaftar.AdminPendaftarActivity"
             android:exported="false" />
         <activity
