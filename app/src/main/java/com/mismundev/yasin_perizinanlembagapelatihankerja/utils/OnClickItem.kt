@@ -2,9 +2,12 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.utils
 
 import android.view.View
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisDokumenModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PermohonanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 
 interface OnClickItem {
@@ -77,5 +80,58 @@ interface OnClickItem {
             title: String,
         )
         fun clickItemSetting(pendaftar: PendaftarModel, it: View)
+    }
+
+    interface AdminClickPermohonan{
+        fun clickNamaUser(
+            keterangan: String,
+            title: String,
+        )
+        fun clickNamaPelatihan(
+            keterangan: String,
+            title: String,
+        )
+        fun clickJenisDokumen(
+            keterangan: String,
+            title: String,
+        )
+        fun clickFile(
+            file: String,
+            ekstensi: String,
+            title: String,
+        )
+        fun clickItemSetting(permohonan: PermohonanModel, it: View)
+    }
+
+    interface AdminClickDokumenPermohonan{
+        fun clickJenisDokumen(
+            keterangan: String,
+            title: String,
+        )
+        fun clickFile(
+            file: String,
+            ekstensi: String,
+            title: String,
+        )
+        fun clickItemSetting(dokumen: DokumenModel, it: View)
+    }
+
+    interface AdminClickDaftarPelatihanJenisDokumen{
+        fun clickJenisPelatihan(
+            keterangan: String,
+            title: String,
+        )
+        fun clickNamaPelatihan(
+            keterangan: String,
+            title: String,
+        )
+    }
+
+    interface AdminClickJenisDokumen{
+        fun clickJenisDokumen(
+            keterangan: String,
+            title: String,
+        )
+        fun clickItemSetting(jenisDokumen: JenisDokumenModel, it: View)
     }
 }

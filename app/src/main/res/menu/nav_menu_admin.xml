@@ -8,6 +8,9 @@
             android:id="@+id/adminNavDrawerHome"
             android:title="Halaman Home"/>
         <item
+            android:id="@+id/adminNavDrawerPermohonan"
+            android:title="Permohonan"/>
+        <item
             android:id="@+id/adminNavDrawerJenisPelatihan"
             android:title="Jenis Pelatihan"/>
         <item

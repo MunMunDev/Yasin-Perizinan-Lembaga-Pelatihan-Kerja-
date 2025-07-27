@@ -12,6 +12,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image">Image</string>
     <string name="masukkan_tanggal">Masukkan Tanggal</string>
+    <string name="masukkan_waktu">Masukkan Waktu</string>
     <string name="ket_klik_file">Klik To Upload File</string>
     <string-array name="metode_pembayaran">
         <item>Online</item>
@@ -20,5 +21,13 @@
     <string-array name="keterangan">
         <item>lulus</item>
         <item>tidak Lulus</item>
+    </string-array>
+    <string-array name="ket_selesai">
+        <item>Belum Terverifikasi</item>
+        <item>Terverifikasi</item>
+    </string-array>
+    <string-array name="ekstensi">
+        <item>PDF</item>
+        <item>Image</item>
     </string-array>
 </resources>

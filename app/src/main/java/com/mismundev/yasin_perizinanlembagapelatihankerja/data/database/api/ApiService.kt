@@ -1,10 +1,13 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.data.database.api
 
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisDokumenModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PembayaranModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PermohonanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 import okhttp3.MultipartBody
@@ -84,6 +87,23 @@ interface ApiService {
     suspend fun getPendaftar(
         @Query("get_pendaftar") get_pendaftar: String,
     ): ArrayList<PendaftarModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getJenisDokumen(
+        @Query("get_jenis_dokumen") get_jenis_dokumen: String,
+        @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+    ): ArrayList<JenisDokumenModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getPermohonan(
+        @Query("get_permohonan") get_permohonan: String,
+    ): ArrayList<PermohonanModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getDokumenPermohonan(
+        @Query("get_dokumen_permohonan") get_dokumen_permohonan: String,
+        @Query("id_permohonan") id_permohonan: Int,
+    ): ArrayList<DokumenModel>
 
 
 
@@ -227,7 +247,7 @@ interface ApiService {
     ): ResponseModel
 
     @FormUrlEncoded
-    @POST("marketplace-wo/api/post.php")
+    @POST("pelatihan-kerja/api/post.php")
     suspend fun postUpdateAdminAkunUser(
         @Field("update_admin_akun_user") update_admin_akun_user: String,
         @Field("id_user") id_user: Int,
@@ -240,7 +260,7 @@ interface ApiService {
     ): ResponseModel
 
     @FormUrlEncoded
-    @POST("marketplace-wo/api/post.php")
+    @POST("pelatihan-kerja/api/post.php")
     suspend fun postAddAdminPendaftar(
         @Field("add_admin_pendaftar") add_admin_pendaftar: String,
         @Field("id_user") id_user: Int,
@@ -249,7 +269,7 @@ interface ApiService {
     ): ResponseModel
 
     @FormUrlEncoded
-    @POST("marketplace-wo/api/post.php")
+    @POST("pelatihan-kerja/api/post.php")
     suspend fun postUpdateAdminPendaftar(
         @Field("update_admin_pendaftar") update_admin_pendaftar: String,
         @Field("id_pendaftar") id_pendaftar: Int,
@@ -259,11 +279,97 @@ interface ApiService {
     ): ResponseModel
 
     @FormUrlEncoded
-    @POST("marketplace-wo/api/post.php")
+    @POST("pelatihan-kerja/api/post.php")
     suspend fun postDeleteAdminPendaftar(
         @Field("delete_admin_pendaftar") delete_admin_pendaftar: String,
         @Field("id_pendaftar") id_pendaftar: Int,
     ): ResponseModel
 
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdatePermohonan(
+        @Field("update_permohonan") update_permohonan: String,
+        @Field("id_permohonan") id_permohonan: Int,
+        @Field("id_user") id_user: Int,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Field("tanggal") tanggal: String,
+        @Field("waktu") waktu: String,
+        @Field("ket") ket: Int,
+        @Field("catatan") catatan: String,
+    ): ResponseModel
+
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdatePermohonanAddImage(
+        @Part("update_permohonan_add_image") update_permohonan_add_image:RequestBody,
+        @Part("id_permohonan") id_permohonan: RequestBody,
+        @Part("id_user") id_user: RequestBody,
+        @Part("id_daftar_pelatihan") id_daftar_pelatihan: RequestBody,
+        @Part("tanggal") tanggal: RequestBody,
+        @Part("waktu") waktu: RequestBody,
+        @Part("ket") ket: RequestBody,
+        @Part("catatan") catatan: RequestBody,
+        @Part gambar: MultipartBody.Part,
+    ): ResponseModel
+
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postTambahDokumenPermohonanAddImage(
+        @Part("tambah_dokumen_permohonan_add_image") tambah_dokumen_permohonan_add_image:RequestBody,
+        @Part("id_permohonan") id_permohonan: RequestBody,
+        @Part("id_daftar_pelatihan") id_daftar_pelatihan: RequestBody,
+        @Part("jenis_dokumen") jenis_dokumen: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateDokumenPermohonan(
+        @Field("update_dokumen_permohonan") update_dokumen_permohonan: String,
+        @Field("id_dokumen") id_dokumen: Int,
+        @Field("jenis_dokumen") jenis_dokumen: String,
+    ): ResponseModel
+
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateDokumenPermohonanAddImage(
+        @Part("update_dokumen_permohonan_add_image") update_dokumen_permohonan_add_image:RequestBody,
+        @Part("id_dokumen") id_dokumen: RequestBody,
+        @Part("jenis_dokumen") jenis_dokumen: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postDeleteDokumenPermohonan(
+        @Field("delete_admin_dokumen_permohonan") delete_admin_dokumen_permohonan: String,
+        @Field("id_dokumen") id_dokumen: Int,
+    ): ResponseModel
+
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postTambahJenisDokumen(
+        @Field("tambah_jenis_dokumen") tambah_jenis_dokumen: String,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Field("jenis_dokumen") jenis_dokumen: String,
+        @Field("ekstensi") ekstensi: String,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateJenisDokumen(
+        @Field("update_jenis_dokumen") update_jenis_dokumen: String,
+        @Field("id_jenis_dokumen") id_jenis_dokumen: Int,
+        @Field("jenis_dokumen") jenis_dokumen: String,
+        @Field("ekstensi") ekstensi: String,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postDeleteJenisDokumen(
+        @Field("delete_jenis_dokumen") delete_jenis_dokumen: String,
+        @Field("id_jenis_dokumen") id_jenis_dokumen: Int,
+    ): ResponseModel
 
 }

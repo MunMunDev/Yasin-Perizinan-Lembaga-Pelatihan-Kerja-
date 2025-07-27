@@ -93,4 +93,6 @@ dependencies {
 
     // Swipe Refresh Layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    implementation "com.github.afreakyelf:Pdf-Viewer:v1.0.7"
 }

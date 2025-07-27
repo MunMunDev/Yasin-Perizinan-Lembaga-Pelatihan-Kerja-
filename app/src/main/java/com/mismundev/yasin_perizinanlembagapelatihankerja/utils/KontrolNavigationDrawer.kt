@@ -16,6 +16,7 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.log_
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.main.AdminMainActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.pelatihan.AdminPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.pendaftar.AdminPendaftarActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.permohonan.AdminPermohonanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.user.AdminUserActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.login.LoginActivity
 
@@ -51,6 +52,11 @@ class KontrolNavigationDrawer(var context: Context) {
                 when(it.itemId){
                     R.id.adminNavDrawerHome -> {
                         val intent = Intent(context, AdminMainActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.adminNavDrawerPermohonan -> {
+                        val intent = Intent(context, AdminPermohonanActivity::class.java)
                         context.startActivity(intent)
                         activity.finish()
                     }
