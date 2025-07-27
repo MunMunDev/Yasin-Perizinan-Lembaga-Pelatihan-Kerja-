@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityAdminMainBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.daftar_pelatihan.AdminDaftarPelatihanActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.jenis_dokumen.list_daftar_pelatihan.AdminJenisDokumenDaftarPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.jenis_pelatihan.AdminJenisPelatihanActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.log_pembayaran.AdminLogPembayaranActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.pelatihan.AdminPelatihanActivity
@@ -56,6 +57,9 @@ class AdminMainActivity : AppCompatActivity() {
 
     private fun setButton() {
         binding.apply {
+            cvJenisDokumen.setOnClickListener {
+                startActivity(Intent(this@AdminMainActivity, AdminJenisDokumenDaftarPelatihanActivity::class.java))
+            }
             cvPermohonan.setOnClickListener {
                 startActivity(Intent(this@AdminMainActivity, AdminPermohonanActivity::class.java))
             }

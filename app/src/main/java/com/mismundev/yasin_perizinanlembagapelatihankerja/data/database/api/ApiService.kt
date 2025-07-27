@@ -2,6 +2,7 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.data.database.api
 
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisDokumenModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PembayaranModel
@@ -86,6 +87,12 @@ interface ApiService {
     suspend fun getPendaftar(
         @Query("get_pendaftar") get_pendaftar: String,
     ): ArrayList<PendaftarModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getJenisDokumen(
+        @Query("get_jenis_dokumen") get_jenis_dokumen: String,
+        @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+    ): ArrayList<JenisDokumenModel>
 
     @GET("pelatihan-kerja/api/get.php")
     suspend fun getPermohonan(
@@ -337,6 +344,32 @@ interface ApiService {
     suspend fun postDeleteDokumenPermohonan(
         @Field("delete_admin_dokumen_permohonan") delete_admin_dokumen_permohonan: String,
         @Field("id_dokumen") id_dokumen: Int,
+    ): ResponseModel
+
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postTambahJenisDokumen(
+        @Field("tambah_jenis_dokumen") tambah_jenis_dokumen: String,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Field("jenis_dokumen") jenis_dokumen: String,
+        @Field("ekstensi") ekstensi: String,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateJenisDokumen(
+        @Field("update_jenis_dokumen") update_jenis_dokumen: String,
+        @Field("id_jenis_dokumen") id_jenis_dokumen: Int,
+        @Field("jenis_dokumen") jenis_dokumen: String,
+        @Field("ekstensi") ekstensi: String,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postDeleteJenisDokumen(
+        @Field("delete_jenis_dokumen") delete_jenis_dokumen: String,
+        @Field("id_jenis_dokumen") id_jenis_dokumen: Int,
     ): ResponseModel
 
 }

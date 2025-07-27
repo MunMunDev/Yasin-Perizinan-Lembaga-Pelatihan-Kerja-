@@ -3,6 +3,7 @@ package com.mismundev.yasin_perizinanlembagapelatihankerja.utils
 import android.view.View
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
+import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisDokumenModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PendaftarModel
@@ -113,5 +114,24 @@ interface OnClickItem {
             title: String,
         )
         fun clickItemSetting(dokumen: DokumenModel, it: View)
+    }
+
+    interface AdminClickDaftarPelatihanJenisDokumen{
+        fun clickJenisPelatihan(
+            keterangan: String,
+            title: String,
+        )
+        fun clickNamaPelatihan(
+            keterangan: String,
+            title: String,
+        )
+    }
+
+    interface AdminClickJenisDokumen{
+        fun clickJenisDokumen(
+            keterangan: String,
+            title: String,
+        )
+        fun clickItemSetting(jenisDokumen: JenisDokumenModel, it: View)
     }
 }

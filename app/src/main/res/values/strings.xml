@@ -26,4 +26,8 @@
         <item>Belum Terverifikasi</item>
         <item>Terverifikasi</item>
     </string-array>
+    <string-array name="ekstensi">
+        <item>PDF</item>
+        <item>Image</item>
+    </string-array>
 </resources>

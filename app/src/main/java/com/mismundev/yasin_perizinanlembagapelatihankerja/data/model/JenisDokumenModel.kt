@@ -8,8 +8,8 @@ class JenisDokumenModel (
     @SerializedName("id_jenis_dokumen")
     var id_jenis_dokumen: Int? = null,
 
-    @SerializedName("id_pelatihan")
-    var id_pelatihan: String? = null,
+    @SerializedName("id_jenis_pelatihan")
+    var id_jenis_pelatihan: String? = null,
 
     @SerializedName("jenis_dokumen")
     var jenis_dokumen: String? = null,
