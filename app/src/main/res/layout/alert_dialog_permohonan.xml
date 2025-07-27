@@ -189,6 +189,34 @@
                     android:textSize="14sp"
                     android:background="@drawable/bg_card" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="Catatan"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/etEditCatatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Catatan"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLength="1000"
+                    android:background="@drawable/bg_card" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

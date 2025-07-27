@@ -1,8 +1,16 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.permohonan
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.OpenableColumns
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -12,7 +20,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mismundev.yasin_perizinanlembagapelatihankerja.R
 import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.admin.AdminPermohonanAdapter
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
@@ -22,13 +33,21 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.UsersModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityAdminPermohonanBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogKeteranganBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogPermohonanBinding
+import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogShowImageBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.admin.main.AdminMainActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.pdf.PdfActivity
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.Constant
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.KontrolNavigationDrawer
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.LoadingAlertDialog
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.TanggalDanWaktu
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -47,6 +66,11 @@ class AdminPermohonanActivity : AppCompatActivity() {
     private var arrayIdUser : ArrayList<Int> = arrayListOf()
     private var arrayDaftarPelatihan : ArrayList<String> = arrayListOf()
     private var arrayIdDaftarPelatihan : ArrayList<Int> = arrayListOf()
+
+    private var file: MultipartBody.Part? = null
+    private var tempView: AlertDialogPermohonanBinding? = null
+
+    private val tanggalDanWaktu = TanggalDanWaktu()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,7 +230,8 @@ class AdminPermohonanActivity : AppCompatActivity() {
             data.forEach{ daftarPelatihan ->
                 daftarPelatihan.pelatihanModel?.let { pelatihan->
                     pelatihan.namaPelatihan?.let {
-                        arrayDaftarPelatihan.add(it)
+                        val daftar = it+" - "+daftarPelatihan.batch
+                        arrayDaftarPelatihan.add(daftar)
                     }
                 }
                 daftarPelatihan.idDaftarPelatihan?.let { arrayIdDaftarPelatihan.add(it) }
@@ -255,8 +280,18 @@ class AdminPermohonanActivity : AppCompatActivity() {
                 showKeterangan(title, keterangan)
             }
 
-            override fun clickGambar(gambar: String, title: String) {
-                showKeterangan(title, gambar)
+            override fun clickFile(file: String, ekstensi: String, title: String) {
+                if(file.isEmpty()){
+                    Toast.makeText(this@AdminPermohonanActivity, "Tidak ada file", Toast.LENGTH_SHORT).show()
+                } else{
+                    if(ekstensi=="pdf"){
+                        val i = Intent(this@AdminPermohonanActivity, PdfActivity::class.java)
+                        i.putExtra("file", file)
+                        startActivity(i)
+                    } else{
+                        setShowImage(title, file)
+                    }
+                }
             }
 
             override fun clickItemSetting(permohonan: PermohonanModel, it: View) {
@@ -315,7 +350,7 @@ class AdminPermohonanActivity : AppCompatActivity() {
         dialogInputan.show()
 
         val positionUser = arrayIdUser.indexOf(permohonan.id_user!!.toInt())
-        val positionPelatihan = arrayIdDaftarPelatihan.indexOf(permohonan.id_user!!.toInt())
+        val positionDaftarPelatihan = arrayIdDaftarPelatihan.indexOf(permohonan.id_daftar_pelatihan!!.toInt())
 
         var idUser = 0
         var idDaftarPelatihan = 0
@@ -342,9 +377,11 @@ class AdminPermohonanActivity : AppCompatActivity() {
         )
         arrayAdapterKeterangan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        tempView = view
         view.apply {
             etEditTanggal.text = permohonan.tanggal
             etEditWaktu.text = permohonan.waktu
+            etEditCatatan.setText(permohonan.catatan)
 
             spUser.adapter = arrayAdapterUser
             spDaftarPelatihan.adapter = arrayAdapterDaftarPelatihan
@@ -374,7 +411,7 @@ class AdminPermohonanActivity : AppCompatActivity() {
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-            spDaftarPelatihan.setSelection(positionPelatihan)
+            spDaftarPelatihan.setSelection(positionDaftarPelatihan)
 
             spKeterangan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(
@@ -389,6 +426,29 @@ class AdminPermohonanActivity : AppCompatActivity() {
             }
             spKeterangan.setSelection(permohonan.ket!!.toInt())
 
+            etEditTanggal.setOnClickListener {
+                tanggalDanWaktu.selectedDate(
+                    etEditTanggal.text.toString(),
+                    etEditTanggal,
+                    this@AdminPermohonanActivity
+                )
+            }
+            etEditWaktu.setOnClickListener {
+                tanggalDanWaktu.selectedTime(
+                    etEditWaktu.text.toString(),
+                    etEditWaktu,
+                    this@AdminPermohonanActivity
+                )
+            }
+
+            etEditSertifikat.setOnClickListener {
+                if(checkPermission()){
+                    pickFile()
+                } else{
+                    requestPermission()
+                }
+            }
+
             btnSimpan.setOnClickListener {
                 var cek = false
                 if (etEditTanggal.toString().isEmpty()) {
@@ -401,15 +461,18 @@ class AdminPermohonanActivity : AppCompatActivity() {
                 }
 
                 if (!cek) {
+                    val idPermohonan = permohonan.id_permohonan!!
+                    val tanggal = etEditTanggal.text.toString()
+                    val waktu = etEditWaktu.text.toString()
+                    val catatan = etEditCatatan.text.toString()
                     if(etEditSertifikat.text == resources.getString(R.string.ket_klik_file)){
-                        val idPermohonan = permohonan.id_permohonan!!
-                        val tanggal = etEditTanggal.text.toString()
-                        val waktu = etEditWaktu.text.toString()
                         postUpdateDataPermohonan(
-                            idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan
+                            idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan, catatan
                         )
                     } else{
-
+                        postUpdateDataPermohonanImage(
+                            idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan, catatan
+                        )
                     }
 
                     dialogInputan.dismiss()
@@ -428,10 +491,33 @@ class AdminPermohonanActivity : AppCompatActivity() {
         idDaftarPelatihan: Int,
         tanggal: String,
         waktu: String,
-        idKeterangan: Int
+        idKeterangan: Int,
+        catatan: String,
     ){
         viewModel.postUpdatePermohonan(
-            idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan
+            idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan, catatan
+        )
+    }
+
+    private fun postUpdateDataPermohonanImage(
+        idPermohonan: Int,
+        idUser: Int,
+        idDaftarPelatihan: Int,
+        tanggal: String,
+        waktu: String,
+        idKeterangan: Int,
+        catatan: String,
+    ){
+        viewModel.postUpdatePermohonanImage(
+            convertStringToMultipartBody(""),
+            convertStringToMultipartBody(idPermohonan.toString()),
+            convertStringToMultipartBody(idUser.toString()),
+            convertStringToMultipartBody(idDaftarPelatihan.toString()),
+            convertStringToMultipartBody(tanggal),
+            convertStringToMultipartBody(waktu),
+            convertStringToMultipartBody(idKeterangan.toString()),
+            convertStringToMultipartBody(catatan),
+            file!!
         )
     }
 
@@ -477,6 +563,127 @@ class AdminPermohonanActivity : AppCompatActivity() {
             smPermohonan.visibility = View.GONE
             rvPermohonan.visibility = View.VISIBLE
         }
+    }
+    //Permission
+    private fun checkPermission(): Boolean{
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            //Android is 11(R) or above
+            Environment.isExternalStorageManager()
+        }
+        else{
+            //Android is below 11(R)
+            val write = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val read = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun getNameFile(uri: Uri): String {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        val nameIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor?.moveToFirst()
+        val name = cursor?.getString(nameIndex!!)
+        cursor?.close()
+        return name!!
+    }
+
+    @SuppressLint("Recycle")
+    private fun uploadImageToStorage(pdfUri: Uri?, pdfFileName: String, nameAPI:String): MultipartBody.Part? {
+        var pdfPart : MultipartBody.Part? = null
+        pdfUri?.let {
+            val file = contentResolver.openInputStream(pdfUri)?.readBytes()
+
+            if (file != null) {
+//                // Membuat objek RequestBody dari file PDF
+//                val requestFile = file.toRequestBody("application/pdf".toMediaTypeOrNull())
+//                // Membuat objek MultipartBody.Part untuk file PDF
+//                pdfPart = MultipartBody.Part.createFormData("materi_pdf", pdfFileName, requestFile)
+
+                pdfPart = convertFileToMultipartBody(file, pdfFileName, nameAPI)
+            }
+        }
+        return pdfPart
+    }
+
+    private fun convertFileToMultipartBody(file: ByteArray, pdfFileName: String, nameAPI:String): MultipartBody.Part?{
+        val requestFile = file.toRequestBody("application/pdf".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData(nameAPI, pdfFileName, requestFile)
+
+        return filePart
+    }
+
+    private fun requestPermission(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            if (Environment.isExternalStorageManager()) {
+                startActivity(Intent(this, AdminPermohonanActivity::class.java))
+            } else { //request for the permission
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                val uri = Uri.fromParts("package", packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+        } else{
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                Constant.STORAGE_PERMISSION_CODE
+            )
+        }
+    }
+
+    private fun pickFile() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/pdf", "image/*"))
+        }
+
+        startActivityForResult(intent, Constant.STORAGE_PERMISSION_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Constant.STORAGE_PERMISSION_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            // Mendapatkan URI file PDF yang dipilih
+            val fileUri = data.data!!
+
+            val nameImage = getNameFile(fileUri)
+
+            tempView?.let {
+                it.etEditSertifikat.text = nameImage
+            }
+
+            // Mengirim file PDF ke website menggunakan Retrofit
+            file = uploadImageToStorage(fileUri, nameImage, "file")
+        }
+    }
+
+    private fun convertStringToMultipartBody(data: String): RequestBody {
+        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), data)
+    }
+
+    private fun setShowImage(title:String, gambar: String) {
+        val view = AlertDialogShowImageBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this@AdminPermohonanActivity)
+        alertDialog.setView(view.root)
+            .setCancelable(false)
+        val dialogInputan = alertDialog.create()
+        dialogInputan.show()
+
+        view.apply {
+            tvTitle.text = title
+            btnClose.setOnClickListener {
+                dialogInputan.dismiss()
+            }
+        }
+
+        Glide.with(this@AdminPermohonanActivity)
+            .load("${Constant.LOCATION_DOKUMEN}$gambar") // URL Gambar
+            .placeholder(R.drawable.loading)
+            .error(R.drawable.img_pelatihan)
+            .into(view.ivShowImage) // imageView mana yang akan diterapkan
+
     }
 
     @Deprecated("Deprecated in Java")

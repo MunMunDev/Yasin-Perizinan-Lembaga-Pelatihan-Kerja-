@@ -287,7 +287,8 @@ interface ApiService {
         @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
         @Field("tanggal") tanggal: String,
         @Field("waktu") waktu: String,
-        @Field("id_keterangan") id_keterangan: Int,
+        @Field("ket") ket: Int,
+        @Field("catatan") catatan: String,
     ): ResponseModel
 
     @Multipart
@@ -299,6 +300,8 @@ interface ApiService {
         @Part("id_daftar_pelatihan") id_daftar_pelatihan: RequestBody,
         @Part("tanggal") tanggal: RequestBody,
         @Part("waktu") waktu: RequestBody,
+        @Part("ket") ket: RequestBody,
+        @Part("catatan") catatan: RequestBody,
         @Part gambar: MultipartBody.Part,
     ): ResponseModel
 

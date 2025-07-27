@@ -94,8 +94,9 @@ interface OnClickItem {
             keterangan: String,
             title: String,
         )
-        fun clickGambar(
-            gambar: String,
+        fun clickFile(
+            file: String,
+            ekstensi: String,
             title: String,
         )
         fun clickItemSetting(permohonan: PermohonanModel, it: View)

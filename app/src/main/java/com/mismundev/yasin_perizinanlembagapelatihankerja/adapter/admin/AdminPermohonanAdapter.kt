@@ -49,6 +49,7 @@ class AdminPermohonanAdapter(
                 tvFile.text = "File"
                 tvDokumen.text = "Dokumen"
                 tvVerifikasi.text = "Terverifikasi"
+                tvCatatan.text = "Catatan"
                 tvSetting.text = ""
 
                 tvNo.setBackgroundResource(R.drawable.bg_table_title)
@@ -61,6 +62,7 @@ class AdminPermohonanAdapter(
                 tvFile.setBackgroundResource(R.drawable.bg_table_title)
                 tvDokumen.setBackgroundResource(R.drawable.bg_table_title)
                 tvVerifikasi.setBackgroundResource(R.drawable.bg_table_title)
+                tvCatatan.setBackgroundResource(R.drawable.bg_table_title)
                 tvSetting.setBackgroundResource(R.drawable.bg_table_title)
 
                 tvNo.setTextColor(Color.parseColor("#ffffff"))
@@ -73,6 +75,7 @@ class AdminPermohonanAdapter(
                 tvFile.setTextColor(Color.parseColor("#ffffff"))
                 tvDokumen.setTextColor(Color.parseColor("#ffffff"))
                 tvVerifikasi.setTextColor(Color.parseColor("#ffffff"))
+                tvCatatan.setTextColor(Color.parseColor("#ffffff"))
                 tvSetting.setTextColor(Color.parseColor("#ffffff"))
 
                 tvNo.setTypeface(null, Typeface.BOLD)
@@ -85,6 +88,7 @@ class AdminPermohonanAdapter(
                 tvFile.setTypeface(null, Typeface.BOLD)
                 tvDokumen.setTypeface(null, Typeface.BOLD)
                 tvVerifikasi.setTypeface(null, Typeface.BOLD)
+                tvCatatan.setTypeface(null, Typeface.BOLD)
                 tvSetting.setTypeface(null, Typeface.BOLD)
             }
             else{
@@ -94,13 +98,14 @@ class AdminPermohonanAdapter(
 
                 permohonan.let {
                     tvNamaUser.text = it.user!!.nama
-                    tvNamaPelatihan.text = it.pelatihan!!.namaPelatihan
+                    tvNamaPelatihan.text = it.daftar_pelatihan?.pelatihanModel?.namaPelatihan+" - "+it.daftar_pelatihan?.batch
                     tvTanggal.text = tanggalDanWaktu.konversiBulan(it.tanggal!!)
                     tvWaktu.text =  it.waktu
                     tvEkstensi.text = it.ekstensi
                     tvFile.text = "File"
                     tvDokumen.text = "Dokumen"
                     tvVerifikasi.text = if(it.ket == "0") "Belum" else "Sudah"
+                    tvCatatan.text = it.catatan
                     tvSetting.text = ":::"
                 }
 
@@ -114,6 +119,7 @@ class AdminPermohonanAdapter(
                 tvFile.setBackgroundResource(R.drawable.bg_table)
                 tvDokumen.setBackgroundResource(R.drawable.bg_table)
                 tvVerifikasi.setBackgroundResource(R.drawable.bg_table)
+                tvCatatan.setBackgroundResource(R.drawable.bg_table)
                 tvSetting.setBackgroundResource(R.drawable.bg_table)
 
                 tvNo.setTextColor(Color.parseColor("#000000"))
@@ -126,6 +132,7 @@ class AdminPermohonanAdapter(
                 tvFile.setTextColor(Color.parseColor("#000000"))
                 tvDokumen.setTextColor(Color.parseColor("#000000"))
                 tvVerifikasi.setTextColor(Color.parseColor("#000000"))
+                tvCatatan.setTextColor(Color.parseColor("#000000"))
                 tvSetting.setTextColor(Color.parseColor("#000000"))
 
                 tvNo.setTypeface(null, Typeface.NORMAL)
@@ -138,6 +145,7 @@ class AdminPermohonanAdapter(
                 tvFile.setTypeface(null, Typeface.NORMAL)
                 tvDokumen.setTypeface(null, Typeface.NORMAL)
                 tvVerifikasi.setTypeface(null, Typeface.NORMAL)
+                tvCatatan.setTypeface(null, Typeface.NORMAL)
                 tvSetting.setTypeface(null, Typeface.NORMAL)
 
                 tvNamaUser.setOnClickListener{
@@ -150,7 +158,7 @@ class AdminPermohonanAdapter(
 //                    onClick.clickJenisDokumen(pelatihan.jenis_dokumen!!.jenis_dokumen!!, "Jenis Dokumen")
 //                }
                 tvFile.setOnClickListener{
-                    onClick.clickGambar(permohonan.file!!, "Gambar")
+                    onClick.clickFile(permohonan.file!!, permohonan.ekstensi!!, "Gambar")
                 }
                 tvDokumen.setOnClickListener{
                     val i = Intent(holder.itemView.context, AdminPermohonanDokumenActivity::class.java)

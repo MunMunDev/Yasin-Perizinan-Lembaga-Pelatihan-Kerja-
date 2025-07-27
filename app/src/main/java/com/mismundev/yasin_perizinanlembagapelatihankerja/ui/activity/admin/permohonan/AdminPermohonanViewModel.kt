@@ -94,13 +94,13 @@ class AdminPermohonanViewModel @Inject constructor(
 //    }
 
     fun postUpdatePermohonan(
-        idPermohonan: Int, idUser: Int, idDaftarPelatihan: Int, tanggal: String, waktu: String, idKeterangan: Int
+        idPermohonan: Int, idUser: Int, idDaftarPelatihan: Int, tanggal: String, waktu: String, idKeterangan: Int, catatan: String
     ){
         viewModelScope.launch(Dispatchers.IO){
             _responsePostUpdatePermohonan.postValue(UIState.Loading)
             try {
                 val data = api.postUpdatePermohonan(
-                    "", idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan
+                    "", idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, idKeterangan, catatan
                 )
                 _responsePostUpdatePermohonan.postValue(UIState.Success(data))
             } catch (ex: Exception){
@@ -111,13 +111,13 @@ class AdminPermohonanViewModel @Inject constructor(
 
     fun postUpdatePermohonanImage(
         post:RequestBody, idPermohonan: RequestBody, idUser: RequestBody, idDaftarPelatihan: RequestBody,
-        tanggal: RequestBody, waktu: RequestBody, file: MultipartBody.Part
+        tanggal: RequestBody, waktu: RequestBody, ket: RequestBody, catatan: RequestBody, file: MultipartBody.Part
     ){
         viewModelScope.launch(Dispatchers.IO){
             _responsePostUpdatePermohonan.postValue(UIState.Loading)
             try {
                 val data = api.postUpdatePermohonanAddImage(
-                    post, idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, file
+                    post, idPermohonan, idUser, idDaftarPelatihan, tanggal, waktu, ket, catatan, file
                 )
                 _responsePostUpdatePermohonan.postValue(UIState.Success(data))
             } catch (ex: Exception){

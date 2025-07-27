@@ -32,6 +32,9 @@ class PermohonanModel (
     @SerializedName("ket")
     var ket: String? = null,
 
+    @SerializedName("catatan")
+    var catatan: String? = null,
+
     @SerializedName("user")
     var user: UsersModel? = null,
 
