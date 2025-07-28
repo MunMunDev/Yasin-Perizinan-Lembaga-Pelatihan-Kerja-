@@ -32,7 +32,7 @@ class AdminPermohonanDokumenViewModel @Inject constructor(
     fun fetchDokumenPermohonan(idPermohonan: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _dokumenPermohonan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchPermohonan = api.getDokumenPermohonan("", idPermohonan)
                 _dokumenPermohonan.postValue(UIState.Success(fetchPermohonan))

@@ -22,7 +22,7 @@ class AdminLogPembayaranViewModel @Inject constructor(
     fun fetchPembayaran() {
         viewModelScope.launch(Dispatchers.IO) {
             _pembayaran.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchPembayaran = api.getAllPembayaran("")
                 _pembayaran.postValue(UIState.Success(fetchPembayaran))

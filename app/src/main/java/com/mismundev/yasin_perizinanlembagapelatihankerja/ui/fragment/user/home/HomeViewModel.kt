@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     fun fetchPelatihanTerdaftar(idUser: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihanTerdaftar.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.getPelatihanTerdaftar("", idUser)
                 _pelatihanTerdaftar.postValue(UIState.Success(pelatihanTerdaftar))
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
     fun fetchPelatihan(){
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.getPelatihan("")
                 _pelatihan.postValue(UIState.Success(pelatihanTerdaftar))

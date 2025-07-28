@@ -39,7 +39,7 @@ class DetailPelatihanViewModel @Inject constructor(
     fun fetchTelahDaftarPelatihan(idDaftarPelatihan: Int, idUser: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _telahDaftar.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.getTelahDaftarPelatihan("", idDaftarPelatihan, idUser)
                 _telahDaftar.postValue(UIState.Success(pelatihanTerdaftar))
@@ -52,7 +52,7 @@ class DetailPelatihanViewModel @Inject constructor(
     fun fetchPelatihan(idDaftarPelatihan: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.getDetailPelatihan("", idDaftarPelatihan)
                 _pelatihan.postValue(UIState.Success(pelatihanTerdaftar))
@@ -65,7 +65,7 @@ class DetailPelatihanViewModel @Inject constructor(
     fun fetchPermohonan(idDaftarPelatihan: Int, idUser: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _permohonan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.getPermohonanDetailPelatihan("", idDaftarPelatihan, idUser)
                 _permohonan.postValue(UIState.Success(pelatihanTerdaftar))
@@ -78,7 +78,7 @@ class DetailPelatihanViewModel @Inject constructor(
     fun postDaftarPelatihan(idDaftarPelatihan: Int, idUser: Int){
         viewModelScope.launch(Dispatchers.IO) {
             _responseDaftarPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.postDaftarPelatihan("", idDaftarPelatihan, idUser)
                 _responseDaftarPelatihan.postValue(UIState.Success(pelatihanTerdaftar))
@@ -94,7 +94,7 @@ class DetailPelatihanViewModel @Inject constructor(
     ){
         viewModelScope.launch(Dispatchers.IO) {
             _responsePostPermohonan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.postPermohonan(
                     "", idUser, idPelatihan, idDaftarPelatihan
@@ -112,7 +112,7 @@ class DetailPelatihanViewModel @Inject constructor(
     ){
         viewModelScope.launch(Dispatchers.IO) {
             _responseDokumenPost.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val pelatihanTerdaftar = api.postDokumenPost(
                     post, idPermohonan, idDaftarPelatihan, jenisDokumen, ekstensi, file

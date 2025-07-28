@@ -37,7 +37,7 @@ class AdminPermohonanViewModel @Inject constructor(
     fun fetchPermohonan() {
         viewModelScope.launch(Dispatchers.IO) {
             _jenisPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchPermohonan = api.getPermohonan("")
                 _jenisPelatihan.postValue(UIState.Success(fetchPermohonan))
@@ -50,7 +50,7 @@ class AdminPermohonanViewModel @Inject constructor(
     private fun fetchUser() {
         viewModelScope.launch(Dispatchers.IO) {
             _user.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val data = api.getAllUser("")
                 _user.postValue(UIState.Success(data))
@@ -63,7 +63,7 @@ class AdminPermohonanViewModel @Inject constructor(
     private fun fetchDaftaPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _daftarPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val data = api.getAllDaftarPelatihan("")
                 _daftarPelatihan.postValue(UIState.Success(data))

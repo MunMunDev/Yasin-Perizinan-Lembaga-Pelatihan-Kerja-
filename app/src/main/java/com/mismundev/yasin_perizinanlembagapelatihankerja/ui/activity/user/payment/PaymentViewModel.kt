@@ -22,7 +22,7 @@ class PaymentViewModel @Inject constructor(
     fun postRegistrasiPembayaran(kodeUnik:String, idUser:Int, idDaftarPelatihan:Int){
         viewModelScope.launch(Dispatchers.IO){
             _responseRegistrasiPembayaran.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val dataRegistrasiPembayaran = api.postRegistrasiPembayaran(
                     "", kodeUnik, idUser, idDaftarPelatihan

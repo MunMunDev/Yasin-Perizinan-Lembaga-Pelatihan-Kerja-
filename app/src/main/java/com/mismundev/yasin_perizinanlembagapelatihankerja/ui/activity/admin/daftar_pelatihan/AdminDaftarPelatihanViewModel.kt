@@ -29,7 +29,7 @@ class AdminDaftarPelatihanViewModel @Inject constructor(
     fun fetchPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchDaftarPelatihan = api.getAllPelatihan("")
                 _pelatihan.postValue(UIState.Success(fetchDaftarPelatihan))
@@ -42,7 +42,7 @@ class AdminDaftarPelatihanViewModel @Inject constructor(
     fun fetchDaftarPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _daftarDaftarPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchDaftarPelatihan = api.getAllDaftarPelatihan("")
                 _daftarDaftarPelatihan.postValue(UIState.Success(fetchDaftarPelatihan))
