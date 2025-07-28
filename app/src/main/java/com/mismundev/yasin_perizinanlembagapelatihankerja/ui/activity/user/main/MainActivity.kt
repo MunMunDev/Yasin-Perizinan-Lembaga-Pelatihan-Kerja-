@@ -14,6 +14,7 @@ import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.accou
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.history.RiwayatFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.home.HomeFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.pelatihan.PelatihanFragment
+import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.fragment.user.permohonan.PermohonanFragment
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferencesLogin
     private lateinit var scaleAnimation: ScaleAnimation
-    private var checkFragmentPosition = 0   // 0 Home, 1 pelatihan, 2 history, 3 account
+    private var checkFragmentPosition = 0   // 0 Home, 1 pelatihan, 2 history,  3 history, 4 account
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             btnPelatihan.setOnClickListener {
                 clickPelatihan()
             }
+            btnPermohonan.setOnClickListener {
+                clickPermohonan()
+            }
             btnRiwayat.setOnClickListener {
                 clickRiwayat()
             }
@@ -60,12 +64,14 @@ class MainActivity : AppCompatActivity() {
             // text color
             tvHome.setTextColor(resources.getColor(R.color.primaryColor))
             tvPelatihan.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvPermohonan.setTextColor(resources.getColor(R.color.textColorBlack))
             tvRiwayat.setTextColor(resources.getColor(R.color.textColorBlack))
             tvAccount.setTextColor(resources.getColor(R.color.textColorBlack))
 
             // image view visibility
             ivHome.setImageResource(R.drawable.icon_home_active)
             ivPelatihan.setImageResource(R.drawable.icon_pelatihan)
+            ivPermohonan.setImageResource(R.drawable.icon_permohonan)
             ivRiwayat.setImageResource(R.drawable.icon_riwayat)
             ivAccount.setImageResource(R.drawable.icon_akun)
 
@@ -87,12 +93,14 @@ class MainActivity : AppCompatActivity() {
             // text color
             tvHome.setTextColor(resources.getColor(R.color.textColorBlack))
             tvPelatihan.setTextColor(resources.getColor(R.color.primaryColor))
+            tvPermohonan.setTextColor(resources.getColor(R.color.textColorBlack))
             tvRiwayat.setTextColor(resources.getColor(R.color.textColorBlack))
             tvAccount.setTextColor(resources.getColor(R.color.textColorBlack))
 
             // image view visibility
             ivHome.setImageResource(R.drawable.icon_home)
             ivPelatihan.setImageResource(R.drawable.icon_pelatihan_active)
+            ivPermohonan.setImageResource(R.drawable.icon_permohonan)
             ivRiwayat.setImageResource(R.drawable.icon_riwayat)
             ivAccount.setImageResource(R.drawable.icon_akun)
 
@@ -109,17 +117,48 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun clickPermohonan() {
+        binding.icBottom.apply {
+            // text color
+            tvHome.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvPelatihan.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvPermohonan.setTextColor(resources.getColor(R.color.primaryColor))
+            tvRiwayat.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvAccount.setTextColor(resources.getColor(R.color.textColorBlack))
+
+            // image view visibility
+            ivHome.setImageResource(R.drawable.icon_home)
+            ivPelatihan.setImageResource(R.drawable.icon_pelatihan)
+            ivPermohonan.setImageResource(R.drawable.icon_permohonan_active)
+            ivRiwayat.setImageResource(R.drawable.icon_riwayat)
+            ivAccount.setImageResource(R.drawable.icon_akun)
+
+            // button view visibility
+//            btnHome.setBackgroundResource(R.drawable.bg_btn_bottom_bar_transparent)
+//            btnPelatihan.setBackgroundResource(R.drawable.bg_btn_bottom_bar_transparent)
+//            btnRiwayat.setBackgroundResource(R.drawable.bg_btn_bottom_bar)
+//            btnAccount.setBackgroundResource(R.drawable.bg_btn_bottom_bar_transparent)
+
+//            btnRiwayat.startAnimation(scaleAnimation)
+
+            setFragment(PermohonanFragment())
+            checkFragmentPosition = 2
+        }
+    }
+
     fun clickRiwayat() {
         binding.icBottom.apply {
             // text color
             tvHome.setTextColor(resources.getColor(R.color.textColorBlack))
             tvPelatihan.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvPermohonan.setTextColor(resources.getColor(R.color.textColorBlack))
             tvRiwayat.setTextColor(resources.getColor(R.color.primaryColor))
             tvAccount.setTextColor(resources.getColor(R.color.textColorBlack))
 
             // image view visibility
             ivHome.setImageResource(R.drawable.icon_home)
             ivPelatihan.setImageResource(R.drawable.icon_pelatihan)
+            ivPermohonan.setImageResource(R.drawable.icon_permohonan)
             ivRiwayat.setImageResource(R.drawable.icon_riwayat_active)
             ivAccount.setImageResource(R.drawable.icon_akun)
 
@@ -132,7 +171,7 @@ class MainActivity : AppCompatActivity() {
 //            btnRiwayat.startAnimation(scaleAnimation)
 
             setFragment(RiwayatFragment())
-            checkFragmentPosition = 2
+            checkFragmentPosition = 3
         }
     }
 
@@ -141,12 +180,14 @@ class MainActivity : AppCompatActivity() {
             // text color
             tvHome.setTextColor(resources.getColor(R.color.textColorBlack))
             tvPelatihan.setTextColor(resources.getColor(R.color.textColorBlack))
+            tvPermohonan.setTextColor(resources.getColor(R.color.textColorBlack))
             tvRiwayat.setTextColor(resources.getColor(R.color.textColorBlack))
             tvAccount.setTextColor(resources.getColor(R.color.primaryColor))
 
             // image view visibility
             ivHome.setImageResource(R.drawable.icon_home)
             ivPelatihan.setImageResource(R.drawable.icon_pelatihan)
+            ivPermohonan.setImageResource(R.drawable.icon_permohonan)
             ivRiwayat.setImageResource(R.drawable.icon_riwayat)
             ivAccount.setImageResource(R.drawable.icon_akun_active)
 
@@ -159,7 +200,7 @@ class MainActivity : AppCompatActivity() {
 //            btnRiwayat.startAnimation(scaleAnimation)
 
             setFragment(AccountFragment())
-            checkFragmentPosition = 3
+            checkFragmentPosition = 4
         }
     }
 

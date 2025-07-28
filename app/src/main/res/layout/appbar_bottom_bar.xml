@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Home"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/primaryColor"
             android:lines="1"/>
     </LinearLayout>
@@ -61,7 +61,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Pelatihan"
-            android:textSize="14sp"
+            android:textSize="12sp"
+            android:textColor="@color/textColorBlack"
+            android:lines="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnPermohonan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:id="@+id/ivPermohonan"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="Permohonan image"
+            android:src="@drawable/icon_permohonan"/>
+
+        <TextView
+            android:id="@+id/tvPermohonan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Permohonan"
+            android:textSize="12sp"
             android:textColor="@color/textColorBlack"
             android:lines="1"/>
     </LinearLayout>
@@ -89,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Riwayat"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/textColorBlack"
             android:lines="1"/>
     </LinearLayout>
@@ -117,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Account"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/textColorBlack"
             android:lines="1"/>
     </LinearLayout>
@@ -145,7 +173,7 @@
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginTop="6dp"-->
 <!--            android:text="Pelatihan"-->
-<!--            android:textSize="14sp"-->
+<!--            android:textSize="12sp"-->
 <!--            android:textColor="@color/primaryColor"-->
 <!--            android:lines="1"-->
 <!--            android:visibility="visible"/>-->
@@ -174,7 +202,7 @@
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginStart="10dp"-->
 <!--            android:text="History"-->
-<!--            android:textSize="14sp"-->
+<!--            android:textSize="12sp"-->
 <!--            android:textColor="@color/primaryColor"-->
 <!--            android:lines="1"-->
 <!--            android:visibility="gone"/>-->
@@ -203,7 +231,7 @@
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginStart="10dp"-->
 <!--            android:text="Account"-->
-<!--            android:textSize="14sp"-->
+<!--            android:textSize="12sp"-->
 <!--            android:textColor="@color/primaryColor"-->
 <!--            android:lines="1"-->
 <!--            android:visibility="gone"/>-->
