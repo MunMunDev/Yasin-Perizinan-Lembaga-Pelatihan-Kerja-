@@ -1,6 +1,7 @@
 package com.mismundev.yasin_perizinanlembagapelatihankerja.utils
 
 import android.view.View
+import android.widget.TextView
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DaftarPelatihanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.JenisDokumenModel
@@ -15,6 +16,14 @@ interface OnClickItem {
         fun clickPelatihan(
             idDaftarPelatihan: Int,
             namaPelatihan: String
+        )
+    }
+
+    interface ClickDokumenPostPermohonan{
+        fun clickFile(
+            tvFile: TextView,
+            position: Int,
+            ekstensi: String,
         )
     }
 

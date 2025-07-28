@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="12dp">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="6dp"
+        android:text="Masukkan"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/etEditFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/ket_klik_file"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:textSize="16sp"
+        android:background="@drawable/bg_card" />
+</LinearLayout>

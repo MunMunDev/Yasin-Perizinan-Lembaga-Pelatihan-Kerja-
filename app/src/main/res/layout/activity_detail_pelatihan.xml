@@ -303,6 +303,28 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:visibility="gone"/>
+            <TextView
+                android:id="@+id/btnPermohonan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="Lakukan Permohonan"
+                android:textSize="14sp"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/btnProsesPermohonan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="Sementara Proses Permohonan"
+                android:textSize="14sp"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:visibility="gone"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
