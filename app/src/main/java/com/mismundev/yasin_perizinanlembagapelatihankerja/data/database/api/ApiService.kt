@@ -58,6 +58,13 @@ interface ApiService {
     ): PendaftarModel
 
     @GET("pelatihan-kerja/api/get.php")
+    suspend fun getPermohonanDetailPelatihan(
+        @Query("get_permohoanan_detail_pelatihan") get_permohoanan_detail_pelatihan: String,
+        @Query("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+        @Query("id_user") id_user: Int,
+    ): PermohonanModel
+
+    @GET("pelatihan-kerja/api/get.php")
     suspend fun getRiwayat(
         @Query("get_riwayat") get_riwayat: String,
         @Query("id_user") id_user: Int,
@@ -146,6 +153,26 @@ interface ApiService {
         @Field("post_daftar_pelatihan") post_daftar_pelatihan:String,
         @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
         @Field("id_user") id_user: Int,
+    ): ResponseModel
+
+    @FormUrlEncoded
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postPermohonan(
+        @Field("post_permohonan") post_permohonan:String,
+        @Field("id_user") id_user: Int,
+        @Field("id_pelatihan") id_pelatihan: Int,
+        @Field("id_daftar_pelatihan") id_daftar_pelatihan: Int,
+    ): ResponseModel
+
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postDokumenPost(
+        @Part("post_dokumen_post_permohonan") post_dokumen_post_permohonan:RequestBody,
+        @Part("id_permohonan") id_permohonan: RequestBody,
+        @Part("id_daftar_pelatihan") id_daftar_pelatihan: RequestBody,
+        @Part("jenis_dokumen") jenis_dokumen: RequestBody,
+        @Part("ekstensi") ekstensi: RequestBody,
+        @Part file: MultipartBody.Part,
     ): ResponseModel
 
     @FormUrlEncoded

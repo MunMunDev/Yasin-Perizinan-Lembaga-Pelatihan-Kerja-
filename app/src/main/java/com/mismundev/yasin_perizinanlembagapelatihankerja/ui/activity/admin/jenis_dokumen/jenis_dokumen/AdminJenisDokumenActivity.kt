@@ -307,10 +307,10 @@ class AdminJenisDokumenActivity : AppCompatActivity() {
 
                 if (!cek) {
                     val idJenisDokumen = jenisDokumen.id_jenis_dokumen!!
-                    val jenisDokumen = etEditJenisDokumen.text.toString()
+                    val vJenisDokumen = etEditJenisDokumen.text.toString()
 
                     postUpdateDataPermohonan(
-                        idJenisDokumen, jenisDokumen, ekstensi
+                        idJenisDokumen, vJenisDokumen, ekstensi
                     )
 
                     dialogInputan.dismiss()

@@ -44,4 +44,7 @@ class PermohonanModel (
     @SerializedName("daftar_pelatihan")
     var daftar_pelatihan: DaftarPelatihanModel? = null,
 
+    @SerializedName("jenis_dokumen")
+    var jenis_dokumen: ArrayList<JenisDokumenModel>? = null,
+
 )
