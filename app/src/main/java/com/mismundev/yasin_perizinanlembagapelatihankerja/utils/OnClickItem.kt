@@ -27,6 +27,15 @@ interface OnClickItem {
         )
     }
 
+    interface ClickPermohonan{
+        fun clickDownload(
+            file: String,
+        )
+        fun clickFile(
+            permohonan: PermohonanModel,
+        )
+    }
+
     interface ClickAkun{
         fun clickItemSetting(akun: UsersModel, it: View)
         fun clickItemAlamat(alamat: String, it: View)

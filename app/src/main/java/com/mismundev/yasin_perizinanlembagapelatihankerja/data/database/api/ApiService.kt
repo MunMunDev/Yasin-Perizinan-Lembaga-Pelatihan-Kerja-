@@ -65,6 +65,19 @@ interface ApiService {
     ): PermohonanModel
 
     @GET("pelatihan-kerja/api/get.php")
+    suspend fun getPermohonanUser(
+        @Query("get_permohonan_user") get_permohonan_user: String,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<PermohonanModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getDokumenPermohonanUser(
+        @Query("get_dokumen_permohonan") get_dokumen_permohonan: String,
+        @Query("id_permohonan") id_permohonan: Int,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<DokumenModel>
+
+    @GET("pelatihan-kerja/api/get.php")
     suspend fun getRiwayat(
         @Query("get_riwayat") get_riwayat: String,
         @Query("id_user") id_user: Int,
