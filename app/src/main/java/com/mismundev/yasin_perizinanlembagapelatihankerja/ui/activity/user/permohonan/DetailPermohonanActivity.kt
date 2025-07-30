@@ -162,7 +162,7 @@ class DetailPermohonanActivity : AppCompatActivity() {
             etEditJenisDokumen.isEnabled = false
             btnSimpan.setOnClickListener {
                 var cek = false
-                if (etEditFile.text.toString() != resources.getString(R.string.ket_klik_file)) {
+                if (etEditFile.text.toString() == resources.getString(R.string.ket_klik_file)) {
                     etEditFile.error = "Tidak Boleh Kosong"
                     cek = true
                 }
@@ -212,6 +212,7 @@ class DetailPermohonanActivity : AppCompatActivity() {
     private fun setSuccessUpdateData(data: ResponseModel?) {
         if(data != null){
             if(data.status == "0"){
+                Toast.makeText(this@DetailPermohonanActivity, "Berhasil Update", Toast.LENGTH_SHORT).show()
                 viewModel.fetchDokumenPermohonan(idPermohonan, sharedPreferences.getIdUser())
             } else{
                 Toast.makeText(this@DetailPermohonanActivity, data.message_response, Toast.LENGTH_SHORT).show()
