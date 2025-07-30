@@ -25,7 +25,7 @@ class AdminJenisPelatihanViewModel @Inject constructor(
     fun fetchJenisPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _jenisPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchJenisPelatihan = api.getAllJenisPelatihan("")
                 _jenisPelatihan.postValue(UIState.Success(fetchJenisPelatihan))

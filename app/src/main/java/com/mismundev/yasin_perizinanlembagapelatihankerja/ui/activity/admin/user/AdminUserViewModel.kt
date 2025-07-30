@@ -25,7 +25,7 @@ class AdminUserViewModel @Inject constructor(
     fun fetchUser() {
         viewModelScope.launch(Dispatchers.IO) {
             _user.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchUser = api.getAllUser("")
                 _user.postValue(UIState.Success(fetchUser))

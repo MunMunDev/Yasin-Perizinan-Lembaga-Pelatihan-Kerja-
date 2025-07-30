@@ -29,7 +29,7 @@ class AdminPelatihanViewModel @Inject constructor(
     fun fetchJenisPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _jenisPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchPelatihan = api.getAllJenisPelatihan("")
                 _jenisPelatihan.postValue(UIState.Success(fetchPelatihan))
@@ -42,7 +42,7 @@ class AdminPelatihanViewModel @Inject constructor(
     fun fetchPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _pelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchPelatihan = api.getAllPelatihan("")
                 _pelatihan.postValue(UIState.Success(fetchPelatihan))

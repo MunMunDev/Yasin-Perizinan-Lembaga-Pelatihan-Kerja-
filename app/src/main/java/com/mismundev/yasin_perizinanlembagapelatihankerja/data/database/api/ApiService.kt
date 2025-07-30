@@ -65,6 +65,19 @@ interface ApiService {
     ): PermohonanModel
 
     @GET("pelatihan-kerja/api/get.php")
+    suspend fun getPermohonanUser(
+        @Query("get_permohonan_user") get_permohonan_user: String,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<PermohonanModel>
+
+    @GET("pelatihan-kerja/api/get.php")
+    suspend fun getDokumenPermohonanUser(
+        @Query("get_dokumen_permohonan") get_dokumen_permohonan: String,
+        @Query("id_permohonan") id_permohonan: Int,
+        @Query("id_user") id_user: Int,
+    ): ArrayList<DokumenModel>
+
+    @GET("pelatihan-kerja/api/get.php")
     suspend fun getRiwayat(
         @Query("get_riwayat") get_riwayat: String,
         @Query("id_user") id_user: Int,
@@ -172,6 +185,14 @@ interface ApiService {
         @Part("id_daftar_pelatihan") id_daftar_pelatihan: RequestBody,
         @Part("jenis_dokumen") jenis_dokumen: RequestBody,
         @Part("ekstensi") ekstensi: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): ResponseModel
+
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateDokumenPermohonanUser(
+        @Part("update_dokumen_permohonan_user") update_dokumen_permohonan_user:RequestBody,
+        @Part("id_dokumen") id_dokumen: RequestBody,
         @Part file: MultipartBody.Part,
     ): ResponseModel
 

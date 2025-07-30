@@ -24,7 +24,7 @@ class AdminJenisDokumenDaftarPelatihanViewModel  @Inject constructor(
     fun fetchDaftarPelatihan() {
         viewModelScope.launch(Dispatchers.IO) {
             _daftarPelatihan.postValue(UIState.Loading)
-            delay(1_000)
+            delay(500)
             try {
                 val fetchDaftarPelatihan = api.getAllDaftarPelatihan("")
                 _daftarPelatihan.postValue(UIState.Success(fetchDaftarPelatihan))

@@ -47,4 +47,52 @@ class PermohonanModel (
     @SerializedName("jenis_dokumen")
     var jenis_dokumen: ArrayList<JenisDokumenModel>? = null,
 
-)
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readParcelable(UsersModel::class.java.classLoader),
+        parcel.readParcelable(PelatihanModel::class.java.classLoader),
+        parcel.readParcelable(DaftarPelatihanModel::class.java.classLoader),
+        TODO("jenis_dokumen")
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id_permohonan)
+        parcel.writeString(id_user)
+        parcel.writeString(id_pelatihan)
+        parcel.writeString(id_daftar_pelatihan)
+        parcel.writeString(tanggal)
+        parcel.writeString(waktu)
+        parcel.writeString(ekstensi)
+        parcel.writeString(file)
+        parcel.writeString(ket)
+        parcel.writeString(catatan)
+        parcel.writeParcelable(user, flags)
+        parcel.writeParcelable(pelatihan, flags)
+        parcel.writeParcelable(daftar_pelatihan, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<PermohonanModel> {
+        override fun createFromParcel(parcel: Parcel): PermohonanModel {
+            return PermohonanModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<PermohonanModel?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
