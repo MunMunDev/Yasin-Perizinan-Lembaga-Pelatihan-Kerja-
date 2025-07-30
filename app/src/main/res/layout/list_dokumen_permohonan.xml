@@ -24,43 +24,55 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/icon_permohonan"/>
         <TextView
-            android:id="@+id/tvJenisPelatihan"
+            android:id="@+id/tvJenisDokumen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/ivGambarPelatihan"
             android:layout_marginTop="12dp"
-            android:text="Nama Jenis Berkas"
+            android:text="Jenis Dokumen"
             android:textStyle="bold"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:maxLines="2"
             android:ellipsize="end"/>
         <TextView
-            android:id="@+id/tvProses"
+            android:id="@+id/tvEkstensi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvJenisPelatihan"
+            app:layout_constraintTop_toBottomOf="@id/tvJenisDokumen"
             android:layout_marginTop="6dp"
             app:layout_constraintStart_toStartOf="parent"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="Berhasil"
+            android:text="PDF"
             android:textColor="@color/abuabu_tua"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/tvTglPelatihan"
+            android:id="@+id/tvCatatan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProses"
+            app:layout_constraintTop_toBottomOf="@id/tvEkstensi"
             android:layout_marginTop="4dp"
-            android:text="30 Desember 2025"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="@color/textColorBlack"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="Catatan"
+            android:textColor="@color/abuabu_tua"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvCatatan"
+            android:layout_marginTop="12dp"
+            android:text="Update File"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/bg_card"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -41,14 +41,14 @@ class DetailPermohonanViewModel @Inject constructor(
         }
     }
 
-    fun postUpdateDokumenPermohonanImage(
-        post: RequestBody, idDokumen: RequestBody, jenisDokumen: RequestBody, file: MultipartBody.Part
+    fun postUpdateDokumenPermohonanFile(
+        post: RequestBody, idDokumen: RequestBody, file: MultipartBody.Part
     ){
         viewModelScope.launch(Dispatchers.IO){
             _responsePostUpdateDokumenPermohonan.postValue(UIState.Loading)
             try {
-                val data = api.postUpdateDokumenPermohonanAddImage(
-                    post, idDokumen, jenisDokumen, file
+                val data = api.postUpdateDokumenPermohonanUser(
+                    post, idDokumen, file
                 )
                 _responsePostUpdateDokumenPermohonan.postValue(UIState.Success(data))
             } catch (ex: Exception){

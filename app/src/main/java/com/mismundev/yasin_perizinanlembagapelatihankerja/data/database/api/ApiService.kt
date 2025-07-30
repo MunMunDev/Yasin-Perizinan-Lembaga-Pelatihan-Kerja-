@@ -188,6 +188,14 @@ interface ApiService {
         @Part file: MultipartBody.Part,
     ): ResponseModel
 
+    @Multipart
+    @POST("pelatihan-kerja/api/post.php")
+    suspend fun postUpdateDokumenPermohonanUser(
+        @Part("update_dokumen_permohonan_user") update_dokumen_permohonan_user:RequestBody,
+        @Part("id_dokumen") id_dokumen: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): ResponseModel
+
     @FormUrlEncoded
     @POST("pelatihan-kerja/api/post.php")
     suspend fun postRegistrasiPembayaran(

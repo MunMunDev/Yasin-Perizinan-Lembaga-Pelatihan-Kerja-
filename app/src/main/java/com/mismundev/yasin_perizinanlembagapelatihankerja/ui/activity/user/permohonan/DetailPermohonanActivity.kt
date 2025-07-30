@@ -11,33 +11,25 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.view.MenuItem
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.mismundev.yasin_perizinanlembagapelatihankerja.R
-import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.admin.AdminDokumenPermohonanAdapter
-import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.user.PermohonanAdapter
+import com.mismundev.yasin_perizinanlembagapelatihankerja.adapter.user.DokumenPermohonanAdapter
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.DokumenModel
-import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.PermohonanModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.data.model.ResponseModel
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.ActivityDetailPermohonanBinding
-import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogKeteranganBinding
-import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogKonfirmasiBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogPermohonanDokumenBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.databinding.AlertDialogShowImageBinding
 import com.mismundev.yasin_perizinanlembagapelatihankerja.ui.activity.pdf.PdfActivity
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.Constant
+import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.LoadingAlertDialog
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.OnClickItem
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.SharedPreferencesLogin
 import com.mismundev.yasin_perizinanlembagapelatihankerja.utils.network.UIState
@@ -51,8 +43,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class DetailPermohonanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPermohonanBinding
     val viewModel: DetailPermohonanViewModel by viewModels()
+    private var file: MultipartBody.Part? = null
+    private var tempView: AlertDialogPermohonanDokumenBinding? = null
     private lateinit var sharedPreferences: SharedPreferencesLogin
     private var idPermohonan = 0
+    private var ket = ""
+    private var loading = LoadingAlertDialog()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPermohonanBinding.inflate(layoutInflater)
@@ -72,6 +68,7 @@ class DetailPermohonanActivity : AppCompatActivity() {
         val i = intent.extras
         if(i != null){
             idPermohonan = i.getInt("id_permohonan", 0)
+            ket = i.getString("ket", "")
             fetchDokumenPermohonan(idPermohonan, sharedPreferences.getIdUser())
         }
     }
@@ -121,38 +118,25 @@ class DetailPermohonanActivity : AppCompatActivity() {
     }
 
     private fun setAdapterPermohonan(data: ArrayList<DokumenModel>) {
-        val adapter = PermohonanAdapter(data, object : OnClickItem.ClickPermohonan{
-            override fun clickDownload(file: String) {
-                val i = Intent(context, PdfActivity::class.java)
-                i.putExtra("file", file)
-                startActivity(i)
+        val adapter = DokumenPermohonanAdapter(data, object : OnClickItem.ClickDokumenPermohonan{
+
+            override fun clickFile(file: String, jenisDokumen: String, ekstensi: String) {
+                if(ekstensi == "pdf"){
+                    val i = Intent(this@DetailPermohonanActivity, PdfActivity::class.java)
+                    i.putExtra("file", file)
+                    startActivity(i)
+                } else{
+                    setShowImage("", file)
+                }
             }
 
-            override fun clickFile(permohonan: PermohonanModel) {
-                val i = Intent(context, DetailPermohonanActivity::class.java)
-                i.putExtra("id_user", sharedPreferences.getIdUser())
-                i.putExtra("id_permohonan", permohonan.id_permohonan)
-                startActivity(i)
+            override fun clickUpdate(dokumen: DokumenModel) {
+                setShowDialogEdit(dokumen)
             }
-        })
-    }
-
-    private fun showKeterangan(title:String, keterangan: String) {
-        val view = AlertDialogKeteranganBinding.inflate(layoutInflater)
-
-        val alertDialog = AlertDialog.Builder(this@DetailPermohonanActivity)
-        alertDialog.setView(view.root)
-            .setCancelable(true)
-        val dialogInputan = alertDialog.create()
-        dialogInputan.show()
-
-        view.apply {
-            tvTitleKeterangan.text = title
-            tvBodyKeterangan.text = keterangan
-
-            btnClose.setOnClickListener {
-                dialogInputan.dismiss()
-            }
+        }, ket)
+        binding.apply {
+            rvDokumen.layoutManager = GridLayoutManager(this@DetailPermohonanActivity, 2)
+            rvDokumen.adapter = adapter
         }
     }
 
@@ -169,39 +153,30 @@ class DetailPermohonanActivity : AppCompatActivity() {
         view.apply {
             etEditFile.setOnClickListener {
                 if(checkPermission()){
-                    pickFile()
+                    pickFile(dokumen.ekstensi!!)
                 } else{
                     requestPermission()
                 }
             }
             etEditJenisDokumen.setText(dokumen.jenis_dokumen)
+            etEditJenisDokumen.isEnabled = false
             btnSimpan.setOnClickListener {
                 var cek = false
-                if (etEditJenisDokumen.text.toString().isEmpty()) {
-                    etEditJenisDokumen.error = "Tidak Boleh Kosong"
+                if (etEditFile.text.toString() != resources.getString(R.string.ket_klik_file)) {
+                    etEditFile.error = "Tidak Boleh Kosong"
                     cek = true
                 }
 
                 if (!cek) {
-                    val idPermohonan = dokumen.id_dokumen!!
-                    val jenisDokumen = etEditJenisDokumen.text.toString()
-                    if(etEditFile.text.toString() != resources.getString(R.string.ket_klik_file)){
-                        postUpdateDataPermohonanImage(
-                            convertStringToMultipartBody("post"),
-                            convertStringToMultipartBody(idPermohonan.toString()),
-                            convertStringToMultipartBody(jenisDokumen),
-                            file!!
-                        )
-                    } else{
-                        postUpdateDataPermohonan(
-                            idPermohonan, jenisDokumen
-                        )
-                    }
-
-                    dialogInputan.dismiss()
+                    val idDokumen = dokumen.id_dokumen!!
+                    postUpdateDataPermohonan(
+                        convertStringToMultipartBody("post"),
+                        convertStringToMultipartBody(idDokumen.toString()),
+                        file!!
+                    )
                 }
+                dialogInputan.dismiss()
             }
-
             btnBatal.setOnClickListener {
                 dialogInputan.dismiss()
             }
@@ -209,22 +184,12 @@ class DetailPermohonanActivity : AppCompatActivity() {
     }
 
     private fun postUpdateDataPermohonan(
-        idPermohonan: Int,
-        jenisDokumen: String,
-    ){
-        viewModel.postUpdateDokumenPermohonan(
-            idPermohonan, jenisDokumen
-        )
-    }
-
-    private fun postUpdateDataPermohonanImage(
         post: RequestBody,
-        idPermohonan: RequestBody,
-        jenisDokumen: RequestBody,
+        idDokumen: RequestBody,
         file: MultipartBody.Part,
     ){
-        viewModel.postUpdateDokumenPermohonanImage(
-            post, idPermohonan, jenisDokumen, file
+        viewModel.postUpdateDokumenPermohonanFile(
+            post, idDokumen, file
         )
     }
 
@@ -247,7 +212,7 @@ class DetailPermohonanActivity : AppCompatActivity() {
     private fun setSuccessUpdateData(data: ResponseModel?) {
         if(data != null){
             if(data.status == "0"){
-                viewModel.fetchDokumenPermohonan(idPermohonan)
+                viewModel.fetchDokumenPermohonan(idPermohonan, sharedPreferences.getIdUser())
             } else{
                 Toast.makeText(this@DetailPermohonanActivity, data.message_response, Toast.LENGTH_SHORT).show()
             }
@@ -259,17 +224,17 @@ class DetailPermohonanActivity : AppCompatActivity() {
 
     private fun setStartShimmer(){
         binding.apply {
-            smPermohonan.startShimmer()
-            smPermohonan.visibility = View.VISIBLE
-            rvPermohonan.visibility = View.GONE
+            smDokumen.startShimmer()
+            smDokumen.visibility = View.VISIBLE
+            rvDokumen.visibility = View.GONE
         }
     }
 
     private fun setStopShimmer(){
         binding.apply {
-            smPermohonan.stopShimmer()
-            smPermohonan.visibility = View.GONE
-            rvPermohonan.visibility = View.VISIBLE
+            smDokumen.stopShimmer()
+            smDokumen.visibility = View.GONE
+            rvDokumen.visibility = View.VISIBLE
         }
     }
 
@@ -324,7 +289,7 @@ class DetailPermohonanActivity : AppCompatActivity() {
     private fun requestPermission(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
             if (Environment.isExternalStorageManager()) {
-                startActivity(Intent(tthis@DetailPermohonanActivity::class.java))
+                startActivity(Intent(this@DetailPermohonanActivity, DetailPermohonanActivity::class.java))
             } else { //request for the permission
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 val uri = Uri.fromParts("package", packageName, null)
@@ -339,14 +304,20 @@ class DetailPermohonanActivity : AppCompatActivity() {
         }
     }
 
-    private fun pickFile() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
-            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/pdf", "image/*"))
-        }
+    private fun pickFile(ekstensi: String) {
+        if(ekstensi.trim().lowercase() == "image"){
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                type = "image/*"
+            }
 
-        startActivityForResult(intent, Constant.STORAGE_PERMISSION_CODE)
+            startActivityForResult(intent, Constant.STORAGE_PERMISSION_CODE)
+        } else{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                type = "application/pdf"
+            }
+
+            startActivityForResult(intent, Constant.STORAGE_PERMISSION_CODE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

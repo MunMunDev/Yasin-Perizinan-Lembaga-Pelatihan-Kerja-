@@ -104,6 +104,7 @@ class PermohonanFragment : Fragment() {
                 val i = Intent(context, DetailPermohonanActivity::class.java)
                 i.putExtra("id_user", sharedPreferences.getIdUser())
                 i.putExtra("id_permohonan", permohonan.id_permohonan)
+                i.putExtra("ket", permohonan.ket)
                 startActivity(i)
             }
         })

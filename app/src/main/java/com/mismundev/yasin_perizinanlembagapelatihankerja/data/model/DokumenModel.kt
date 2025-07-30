@@ -21,4 +21,7 @@ class DokumenModel (
     @SerializedName("file")
     var file: String? = null,
 
+    @SerializedName("catatan")
+    var catatan: String? = null,
+
     )
